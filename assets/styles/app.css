@@ -1,3 +1,6 @@
-body {
-    background-color: skyblue;
+@import url("../vendor/bootstrap/dist/css/bootstrap.min.css");
+@import url("../vendor/@fortawesome/fontawesome-free/css/all.css");
+
+.text-cursive{
+    font-family: cursive;
 }
