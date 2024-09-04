@@ -30,9 +30,13 @@
                             data-bs-toggle="tooltip" title="Modifier">
                             <i class="fa fa-edit text-warning"></i>
                         </a>
-                        <a href="{{ path('app_category_delete', {slug: category.slug}) }}" class="btn border-0">
+                        <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#{{ category.id }}">
                             <i class="fa fa-trash text-danger"></i>
-                        </a>
+                        </button>
+                        {{ component('DeleteModal', {id: category.id, title: 'Catégorie: ' ~ category.name, message:
+                        'Voulez-vous
+                        supprimer la catégorie ' ~
+                        category.name ~ '?', path: path('app_category_delete', {slug: category.slug}) }) }}
                     </td>
                 </tr>
                 {% else %}
