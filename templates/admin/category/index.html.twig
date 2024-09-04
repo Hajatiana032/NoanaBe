@@ -1,11 +1,10 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}{{ parent() }}{% endblock %}
+{% extends "admin/layout.html.twig" %}
+{% block title %}{{ parent() }}-Admin(catégories){% endblock %}
 
 {% block stylesheets %}
 {% endblock %}
 
-{% block body %}
+{% block main %}
 <div class="container">
     <h1 class="text-cursive fw-bold">Liste des catégories</h1>
     {% include "partials/_flashMessages.html.twig" %}

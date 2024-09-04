@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+
+{% block nav %}
+{% endblock %}
+
+{% block body %}
+<header class="navbar navbar-expand-md navbar-dark sticky-top bg-dark">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand col-lg-2 text-cursive fw-bold">NoanaBe</a>
+        <button class="navbar-toggler shadow-none p-1">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <form action="" class="w-100">
+            <input type="search" name="" id="" class="form-control shadow-none rounded-0">
+        </form>
+        <div class="navbar-nav">
+            <a href="{{ path('app_logout') }}" class="px-3 text-decoration-none">Déconnexion</a>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2 bg-danger">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="{{ path('app_category') }}" class="nav-link">Catégories</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-10">
+            {% block main %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

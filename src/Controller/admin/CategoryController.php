@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\admin;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
@@ -25,7 +25,8 @@ class CategoryController extends AbstractController
     #[Route('', name: '')]
     public function index(CategoryRepository $categoryRepository): Response
     {
-        return $this->render('category/index.html.twig', [
+        return $this->render('admin/category/index.html.twig', [
+            'currentMenu' => 'adminCategory',
             'categories' => $categoryRepository->findAll(),
         ]);
     }
@@ -57,7 +58,7 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('app_category');
         }
 
-        return $this->render('category/new.html.twig', [
+        return $this->render('admin/category/new.html.twig', [
             'form' => $form
         ]);
     }
@@ -85,7 +86,7 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('app_category');
         }
 
-        return $this->render('category/edit.html.twig', [
+        return $this->render('admin/category/edit.html.twig', [
             'category' => $category,
             'form' => $form
         ]);
