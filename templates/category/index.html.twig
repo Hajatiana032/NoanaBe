@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-cursive fw-bold">Liste des catégories</h1>
+    <a href="{{ path('app_category_new') }}" class="btn btn-primary mb-2">
+        <i class="fa fa-add">&nbsp;</i>
+        Ajouter une catégorie
+    </a>
+    <div class="table-responsive">
+        <table class="table table-bordered text-nowrap">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>
+                        <a href="{{ path('app_category_edit', {slug: category.slug}) }}" class="btn border-0">
+                            <i class="fa fa-edit text-warning"></i>
+                        </a>
+                        <a href="{{ path('app_category_delete', {slug: category.slug}) }}" class="btn border-0">
+                            <i class="fa fa-trash text-danger"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr class="text-center">
+                    <td colspan="2" class="text-danger">Aucun résultat</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

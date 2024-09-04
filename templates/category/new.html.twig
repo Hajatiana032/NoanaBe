@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+{{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-cursive fw-bold mb-5">Ajout d'une catégorie</h1>
+    <div style="max-width: 350px;">
+        {{ form_start(form) }}
+        {% include "category/_form.html.twig" %}
+        <button type="submit" class="btn btn-primary mt-3">
+            <i class="fa fa-save">&nbsp;</i>
+            Enregistrer
+        </button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
