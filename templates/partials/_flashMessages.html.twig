@@ -1,0 +1,11 @@
+{% for label, messages in app.flashes %}
+{% for message in messages %}
+<div class='alert alert-success alert-dismissible fade show align-items-center justify-content-between d-flex'>
+    {{ message|raw }}
+    <button type='button' class='btn btn-success align-items-center fs-2 justify-content-center d-flex'
+        data-bs-dismiss='alert' aria-label='Close' style="width: 35px; height: 35px; border-radius: 100% 100%;">
+        <i class="fa fa-close"></i>
+    </button>
+</div>
+{% endfor %}
+{% endfor %}

@@ -1,6 +1,10 @@
 @import url("../vendor/bootstrap/dist/css/bootstrap.min.css");
 @import url("../vendor/@fortawesome/fontawesome-free/css/all.css");
 
+body{
+    font-size: 18px;
+}
+
 .text-cursive{
     font-family: cursive;
 }

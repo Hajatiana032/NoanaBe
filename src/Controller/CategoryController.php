@@ -52,6 +52,8 @@ class CategoryController extends AbstractController
             $em->persist($category);
             $em->flush();
 
+            $this->addFlash('success', "<i class='fa fa-check-circle fs-2 text-success'></i> La catégorie {$category->getName()} a été ajoutée.");
+
             return $this->redirectToRoute('app_category');
         }
 
@@ -66,6 +68,9 @@ class CategoryController extends AbstractController
     #[Route('/modification/{slug}', name: '_edit')]
     public function edit(#[MapEntity(mapping: ['slug' => 'slug'])] Category $category, EntityManagerInterface $em, Request $request, SluggerInterface $slugger): Response
     {
+        // ? stock the old of the category into a variable
+        $oldName = $category->getName();
+
         $form = $this->createForm(CategoryType::class, $category);
 
         $form->handleRequest($request);
@@ -74,6 +79,8 @@ class CategoryController extends AbstractController
             $category->setSlug($slugger->slug($category->getName())->lower());
 
             $em->flush();
+
+            $this->addFlash('success', "<i class='fa fa-check-circle fs-2 text-success'></i> La catégorie {$oldName} a été modifiée en {$category->getName()}.");
 
             return $this->redirectToRoute('app_category');
         }
@@ -89,6 +96,8 @@ class CategoryController extends AbstractController
     {
         $em->remove($category);
         $em->flush();
+
+        $this->addFlash('success', "<i class='fa fa-check-circle fs-2 text-success'></i> La catégorie {$category->getName()} a été supprimée.");
 
         return $this->redirectToRoute('app_category');
     }
