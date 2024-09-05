@@ -26,7 +26,7 @@ class CategoryController extends AbstractController
     public function index(CategoryRepository $categoryRepository): Response
     {
         return $this->render('admin/category/index.html.twig', [
-            'currentMenu' => 'adminCategory',
+            'currentMenu' => 'admin_category',
             'categories' => $categoryRepository->findAll(),
         ]);
     }
@@ -59,6 +59,7 @@ class CategoryController extends AbstractController
         }
 
         return $this->render('admin/category/new.html.twig', [
+            'currentMenu' => 'admin_category',
             'form' => $form
         ]);
     }
@@ -87,6 +88,7 @@ class CategoryController extends AbstractController
         }
 
         return $this->render('admin/category/edit.html.twig', [
+            'currentMenu' => 'admin_category',
             'category' => $category,
             'form' => $form
         ]);

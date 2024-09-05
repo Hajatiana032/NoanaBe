@@ -1,17 +1,31 @@
-<ul class="nav flex-column">
-    <li class="nav-item">
-        <a href="{{ path('app_home') }}" class="nav-link">Retourner ver le site</a>
-    </li>
-    <li class="nav-item">
-        <a href="{{ path('app_category') }}" class="nav-link text-danger">
-            <i class="fa fa-tag">&nbsp;</i>
-            Catégories
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{ path('admin_user') }}" class="nav-link">
-            <i class="fa fa-users">&nbsp;</i>
-            Utilisateurs
-        </a>
-    </li>
-</ul>
+<div class="container-fluid">
+    <ul class="nav navbar-nav bg-dark flex-column">
+        <li class="nav-item">
+            <a href="{{ path('app_home') }}" class="nav-link link-primary text-truncate mb-5">
+                <i class="fa fa-home-alt">&nbsp;</i>
+                Retourner vers le site
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="{{ path('admin_dashboard') }}"
+                class="nav-link {{ currentMenu is defined and currentMenu == 'admin_dashboard' ? 'link-warning' : 'link-light' }}">
+                <i class="fa fa-dashboard">&nbsp;</i>
+                Tableau de bord
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="{{ path('app_category') }}"
+                class="nav-link {{ currentMenu is defined and currentMenu == 'admin_category' ? 'link-warning' : 'link-light' }}">
+                <i class="fa fa-tag">&nbsp;</i>
+                Catégories
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('admin_user') }}"
+                class="nav-link {{ currentMenu is defined and currentMenu == 'admin_user' ? 'link-warning' : 'link-light' }}">
+                <i class="fa fa-users">&nbsp;</i>
+                Utilisateurs
+            </a>
+        </li>
+    </ul>
+</div>
