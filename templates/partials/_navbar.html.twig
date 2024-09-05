@@ -23,25 +23,40 @@
 
                 </ul>
                 <div class="d-flex align-items-center">
-                    {% if is_granted("ROLE_ADMIN") %}
-                    <a href="{{ path('admin_dashboard') }}" class="link-light nav-link me-3">
-                        <i class="fa fa-dashboard">&nbsp;</i>
-                        Admin
-                    </a>
-                    <a href="{{ path('app_logout') }}" class="nav-link link-light me-3">
-                        Déconnexion
-                    </a>
-                    {% elseif is_granted("ROLE_USER") %}
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if app.user %}
+                    <!-- Example single danger button -->
+                    <div class="btn-group dropstart">
+                        <button type="button" class="btn text-light border-0 dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{ app.user.firstname|capitalize }} {{ app.user.lastname|upper }}
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <ul class="dropdown-menu bg-dark shadow">
+                            {% if is_granted("ROLE_ADMIN") %}
+                            <li class="mb-2">
+                                <a class="dropdown-item link-light bg-transparent" href="{{ path('admin_dashboard') }}">
+                                    <i class="fa fa-dashboard">&nbsp;</i>
+                                    Admin
+                                </a>
+                            </li>
+                            {% endif %}
+                            <li class="mb-2">
+                                <a class="dropdown-item link-light bg-transparent" href="{{ path('admin_dashboard') }}">
+                                    <i class="fa fa-user">&nbsp;</i>
+                                    Mon profil
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item link-danger bg-transparent" href="{{ path('app_logout') }}">
+                                    <i class="fa fa-power-off">&nbsp;</i>
+                                    Déconnexion
+                                </a>
+                            </li>
                         </ul>
                     </div>
+
                     {% else %}
                     <a href="{{ path('app_register') }}" class="nav-link link-light me-3">
                         <i class="fa fa-pen">&nbsp;</i>
