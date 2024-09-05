@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand text-cursive fw-bold" href="{{ path('app_home') }}">NoanaBe</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -20,24 +20,39 @@
                         <a class="nav-link {{ currentMenu is defined and currentMenu == 'home' ? 'link-warning text-cursive' : 'link-light' }}"
                             aria-current="page" href="{{ path('app_home') }}">Acceuil</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    {% if is_granted("ROLE_ADMIN") %}
-                    <li class="nav-item">
-                        <a href="{{ path('admin_dashboard') }}" class="btn bg-primary text-light nav-link">
-                            <i class="fa fa-dashboard">&nbsp;</i>
-                            Admin
-                        </a>
-                    </li>
-                    {% endif %}
+
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success" type="submit">
-                        Search
-                    </button>
-                </form>
+                <div class="d-flex align-items-center">
+                    {% if is_granted("ROLE_ADMIN") %}
+                    <a href="{{ path('admin_dashboard') }}" class="link-light nav-link me-3">
+                        <i class="fa fa-dashboard">&nbsp;</i>
+                        Admin
+                    </a>
+                    <a href="{{ path('app_logout') }}" class="nav-link link-light me-3">
+                        Déconnexion
+                    </a>
+                    {% elseif is_granted("ROLE_USER") %}
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <a href="{{ path('app_register') }}" class="nav-link link-light me-3">
+                        <i class="fa fa-pen">&nbsp;</i>
+                        Inscription
+                    </a>
+                    <a href="{{ path('app_login') }}" class="nav-link link-light">
+                        <i class="fa fa-arrow-right-to-bracket "></i>
+                        Connexion
+                    </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

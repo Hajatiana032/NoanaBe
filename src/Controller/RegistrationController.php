@@ -11,12 +11,22 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
+    /**
+     * todo Add an user
+     *
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param Security $security
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route('/inscription', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -28,6 +38,9 @@ class RegistrationController extends AbstractController
 
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+
+            // ? add a slug for user
+            $user->setSlug($slugger->slug($user->getFirstname() . '-' . $user->getLastname())->lower());
 
             $entityManager->persist($user);
             $entityManager->flush();
