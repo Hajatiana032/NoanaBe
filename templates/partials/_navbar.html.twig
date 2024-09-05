@@ -23,27 +23,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
                     </li>
-                    {% if is_granted("ROLE_ADMIN") %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-dashboard">&nbsp;</i>
-                            Admin
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item {{ currentMenu is defined and currentMenu == 'adminUser' ? 'active' }}"
-                                href="{{ path('app_user') }}">
-                                <i class="fa fa-users">&nbsp;</i>
-                                Utilisateurs
-                            </a>
-                            <a class="dropdown-item {{ currentMenu is defined and currentMenu == 'adminCategory' ? 'active' }}"
-                                href="{{ path('app_category') }}">
-                                <i class="fa fa-tag"></i>
-                                Catégories
-                            </a>
-                        </div>
-                    </li>
-                    {% endif %}
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
