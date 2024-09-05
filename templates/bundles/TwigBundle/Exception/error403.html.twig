@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+	body {
+		background: rgba(9, 145, 155, 0.712);
+	}
+</style>
+
+<div class='container-fluid d-flex align-items-center justify-content-center' style='height: 80vh;'>
+	<div class='text-center'>
+		<img src="{{ asset('img/icon/forbidden-sign.png') }}" class="fa fa-beat-fade" alt='icon' width='130px'>
+		<h1 class='text-light'>Accès refusé</h1>
+	</div>
+</div>
+{% endblock %}
