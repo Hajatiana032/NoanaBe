@@ -16,8 +16,8 @@
         <table class="table table-bordered text-nowrap">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Actions</th>
+                    <th class="col-6">Nom</th>
+                    <th class="col-6">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,7 +40,23 @@
                 </tr>
                 {% else %}
                 <tr class="text-center">
-                    <td colspan="2" class="text-danger">Aucun résultat</td>
+                    <td colspan="2">
+                        <div class="container">
+                            <div class="row">
+                                <div class="placeholder-wave col-lg-4">
+                                    <span class="placeholder placeholder-xs col-12"></span><br>
+                                    <span class="placeholder col-12"></span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <span class="text-danger">Aucun résultat</span>
+                                </div>
+                                <div class="placeholder-wave col-lg-4">
+                                    <span class="placeholder placeholder-xs col-12"></span><br>
+                                    <span class="placeholder col-12"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

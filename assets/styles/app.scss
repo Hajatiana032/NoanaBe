@@ -1,0 +1,21 @@
+@import url("../vendor/@fortawesome/fontawesome-free/css/all.css");
+@import "../../vendor/twbs//bootstrap/scss/functions";
+@import "../../vendor/twbs//bootstrap/scss/variables";
+
+$custom-colors: (
+  "primary": rgb(0, 159, 255),
+  "dark": rgb(24, 24, 25),
+  "warning": $yellow,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "../../vendor/twbs/bootstrap/scss/bootstrap.scss";
+
+body {
+  font-size: 18px;
+}
+
+.text-cursive {
+  font-family: cursive;
+}
