@@ -3,7 +3,7 @@
 @import "../../vendor/twbs//bootstrap/scss/variables";
 
 $custom-colors: (
-  "primary": rgb(0, 159, 255),
+  "primary": $indigo,
   "dark": rgb(24, 24, 25),
   "warning": $yellow,
 );

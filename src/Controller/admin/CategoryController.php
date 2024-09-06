@@ -11,9 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/admin/catégories', name: 'app_category')]
+#[IsGranted("ROLE_ADMIN")]
+#[Route('/admin/catégories', name: 'admin_category')]
 class CategoryController extends AbstractController
 {
     /**
@@ -53,9 +55,9 @@ class CategoryController extends AbstractController
             $em->persist($category);
             $em->flush();
 
-            $this->addFlash('success', "<i class='fa fa-check-circle fs-2 text-success'></i> La catégorie {$category->getName()} a été ajoutée.");
+            $this->addFlash('success', "La catégorie {$category->getName()} a été ajoutée.");
 
-            return $this->redirectToRoute('app_category');
+            return $this->redirectToRoute('admin_category');
         }
 
         return $this->render('admin/category/new.html.twig', [
@@ -82,9 +84,9 @@ class CategoryController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', "<i class='fa fa-check-circle fs-2 text-success'></i> La catégorie {$oldName} a été modifiée en {$category->getName()}.");
+            $this->addFlash('success', "La catégorie {$oldName} a été modifiée en {$category->getName()}.");
 
-            return $this->redirectToRoute('app_category');
+            return $this->redirectToRoute('admin_category');
         }
 
         return $this->render('admin/category/edit.html.twig', [
@@ -94,14 +96,17 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    /**
+     * todo Delete a category
+     */
     #[Route('/suppression/{slug}', name: '_delete')]
     public function delete(#[MapEntity(mapping: ['slug' => 'slug'])] Category $category, EntityManagerInterface $em): Response
     {
         $em->remove($category);
         $em->flush();
 
-        $this->addFlash('success', "<i class='fa fa-check-circle fs-2 text-success'></i> La catégorie {$category->getName()} a été supprimée.");
+        $this->addFlash('success', "La catégorie {$category->getName()} a été supprimée.");
 
-        return $this->redirectToRoute('app_category');
+        return $this->redirectToRoute('admin_category');
     }
 }

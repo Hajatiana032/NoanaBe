@@ -1,11 +1,19 @@
 <div class="container-fluid">
     <ul class="nav navbar-nav bg-dark flex-column">
         <li class="nav-item">
-            <a href="{{ path('app_home') }}" class="nav-link link-primary text-truncate mb-5">
+            <a href="{{ path('app_home') }}" class="nav-link link-primary text-truncate mb-3">
                 <i class="fa fa-home-alt">&nbsp;</i>
                 Retourner vers le site
             </a>
         </li>
+        {% if app.user %}
+        <li class="nav-item mb-5">
+            <a href="{{ path('admin_dashboard') }}" class="nav-link text-truncate link-light">
+                <i class="fa fa-user-edit">&nbsp;</i>
+                {{ app.user.firstname|capitalize }} {{ app.user.lastname|upper|slice(0, 10) }}...
+            </a>
+        </li>
+        {% endif %}
         <li class="nav-item mb-2">
             <a href="{{ path('admin_dashboard') }}"
                 class="nav-link {{ currentMenu is defined and currentMenu == 'admin_dashboard' ? 'link-warning' : 'link-light' }}">
@@ -14,7 +22,7 @@
             </a>
         </li>
         <li class="nav-item mb-2">
-            <a href="{{ path('app_category') }}"
+            <a href="{{ path('admin_category') }}"
                 class="nav-link {{ currentMenu is defined and currentMenu == 'admin_category' ? 'link-warning' : 'link-light' }}">
                 <i class="fa fa-tag">&nbsp;</i>
                 Catégories

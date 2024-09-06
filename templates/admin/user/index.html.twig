@@ -5,6 +5,7 @@
 {% block main %}
 <div class="container-fluid">
     <h1 class="text-cursive fw-bold">Liste des utilisateurs</h1>
+    {% include "partials/_flashMessages.html.twig" %}
     <div class="table-responsive">
         <table class="table table-bordered text-nowrap">
             <thead>
@@ -15,7 +16,9 @@
                     <th>Roles</th>
                     <th>Date de création</th>
                     <th>Date de mise à jour</th>
+                    {% if is_granted("ROLE_SUPER_ADMIN") %}
                     <th>Actions</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -31,9 +34,14 @@
                         {{ user.email }}
                     </td>
                     <td>
-                        {% for role in user.roles %}
-                        {{ role }}
-                        {% endfor %}
+                        <span
+                            class="badge {{ ('ROLE_SUPER_ADMIN' in user.roles) ? 'bg-success' : ('ROLE_ADMIN' in user.roles) ? 'bg-primary' : 'bg-warning' }}">
+                            {{
+                            ("ROLE_SUPER_ADMIN" in user.roles) ? 'Super administrateur' :
+                            ("ROLE_ADMIN" in user.roles) ? 'Administrateur':
+                            'Client'
+                            }}
+                        </span>
                     </td>
                     <td>
                         {{ user.createdat|date("d-M-Y") }}
@@ -41,17 +49,42 @@
                     <td>
                         {{ user.createdat|date("d-M-Y") }}
                     </td>
+                    {% if is_granted("ROLE_SUPER_ADMIN") %}
                     <td>
-                        <a href="#" class="btn border-0" data-bs-toggle="tooltip" title="Modifier">
-                            <i class="fa fa-edit text-warning"></i>
+                        <a href="{{ path('admin_user_roles', {admin: app.user.slug, slug: user.slug}) }}"
+                            class="btn border-0" data-bs-toggle="tooltip" title="Modifier le role">
+                            <i class="fa fa-people-arrows text-warning"></i>
                         </a>
-                        <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#{{ user.id }}">
-                            <i class="fa fa-trash text-danger"></i>
-                        </button>
+                        <span data-bs-toggle="tooltip" title="Supprimer">
+                            <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#{{ user.id }}">
+                                <i class="fa fa-trash text-danger"></i>
+                            </button>
+                        </span>
                         {{ component('DeleteModal', {id: user.id, title: 'Utilisateur(rice): ' ~
                         user.firstname|capitalize ~
                         ' ' ~ user.lastname|upper, message: 'Voulez-vous supprimer cette utilisateur(rice)?', path:
                         '#'}) }}
+                    </td>
+                </tr>
+                {% endif %}
+                {% else %}
+                <tr class="text-center">
+                    <td colspan="2">
+                        <div class="container">
+                            <div class="row">
+                                <div class="placeholder-wave col-lg-4">
+                                    <span class="placeholder placeholder-xs col-12"></span><br>
+                                    <span class="placeholder col-12"></span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <span class="text-danger">Aucun résultat</span>
+                                </div>
+                                <div class="placeholder-wave col-lg-4">
+                                    <span class="placeholder placeholder-xs col-12"></span><br>
+                                    <span class="placeholder col-12"></span>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}
