@@ -32,8 +32,8 @@
                         <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#{{ category.id }}">
                             <i class="fa fa-trash text-danger"></i>
                         </button>
-                        {{ include('components/DeleteModal.html.twig', {id: category.id, title: 'Catégorie: ' ~
-                        category.name, message: 'Voulez-vous supprimer la catégorie ' ~ category.name ~ '?', path:
+                        {{ include('components/DeleteConfirmation.html.twig', {id: category.id, title: 'Catégorie: ' ~
+                        category.name, message: 'Voulez-vous supprimer cette catégorie?', path:
                         path('admin_category_delete', {slug: category.slug})}) }}
                     </td>
                 </tr>

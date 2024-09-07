@@ -1,38 +1,49 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/layout.html.twig' %}
 
-{% block title %}Product{% endblock %}
+{% block title %}{{ parent() }}-Admin(utilisateurs){% endblock %}
 
-{% block body %}
-    <h1>Product</h1>
+{% block main %}
+<h1 class="text-cursive fw-bold">{{ product.title }}</h1>
+<a href="{{ path('admin_product') }}" class="link-danger text-decoration-none">
+    <i class="fa fa-arrow-alt-circle-left">&nbsp;</i>
+    Retour vers la liste
+</a>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ product.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ product.price }}</td>
-            </tr>
-            <tr>
-                <th>IsAvailable</th>
-                <td>{{ product.isAvailable ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_admin_product_index') }}">back to list</a>
+<table class="table mt-5">
+    <tbody>
+        <tr>
+            <th>Titre</th>
+            <td>{{ product.title }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ product.description }}</td>
+        </tr>
+        <tr>
+            <th>Prix</th>
+            <td>{{ product.price|format_currency('MGA', {}, 'fr_MG') }}</td>
+        </tr>
+        <tr>
+            <th>Disponibilité</th>
+            <td>{{ product.isAvailable ? 'Yes' : 'No' }}</td>
+        </tr>
+    </tbody>
+</table>
 
-    <a href="{{ path('app_admin_product_edit', {'id': product.id}) }}">edit</a>
+<a href="{{ path('admin_product_edit', {slug: product.slug}) }}" class="btn text-warning border-0"
+    data-bs-toggle="tooltip" title="Modifier">
+    <i class="fa fa-edit">&nbsp;</i>
+    Modifier
+</a>
+<span data-bs-toggle="tooltip" title="Supprimer">
+    <button class="btn text-danger border-0" data-bs-toggle="modal" data-bs-target="#{{ product.id }}">
+        <i class="fa fa-trash">&nbsp;</i>
+        Supprimer
+    </button>
+</span>
+{{ include('components/DeleteConfirmation.html.twig', {id: product.id, title: 'Produit: ' ~
+product.title, message: 'Voulez-vous supprimer ce produit?', path: path('admin_product_delete',
+{slug: product.slug}), token: product.id}) }}
 
-    {{ include('admin/product/_delete_form.html.twig') }}
 {% endblock %}

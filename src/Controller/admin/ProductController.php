@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[IsGranted("ROLE_ADMIN")]
-#[Route('/admin/product', name: 'admin_product')]
+#[Route('/admin/produits', name: 'admin_product')]
 final class ProductController extends AbstractController
 {
     /**
@@ -28,6 +28,7 @@ final class ProductController extends AbstractController
     public function index(ProductRepository $productRepository): Response
     {
         return $this->render('admin/product/index.html.twig', [
+            'currentMenu' => 'admin_product',
             'products' => $productRepository->findAll(),
         ]);
     }
@@ -58,15 +59,17 @@ final class ProductController extends AbstractController
         }
 
         return $this->render('admin/product/new.html.twig', [
+            'currentMenu' => 'admin_product',
             'product' => $product,
             'form' => $form,
         ]);
     }
 
     #[Route('/{slug}', name: '_show', methods: ['GET'])]
-    public function show(Product $product): Response
+    public function show(#[MapEntity(mapping: ['slug' => 'slug'])] Product $product): Response
     {
         return $this->render('admin/product/show.html.twig', [
+            'currentMenu' => 'admin_product',
             'product' => $product,
         ]);
     }
@@ -74,31 +77,27 @@ final class ProductController extends AbstractController
     #[Route('/modification/{slug}', name: '_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Product $product, EntityManagerInterface $entityManager): Response
     {
-        $currentProduct = $product;
-
+        $currentProduct = $product->getTitle();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($currentProduct == $product) {
-                $this->addFlash('warning', "Le produit {$currentProduct} a été modifié en {$product->getTitle()}.");
-            }
-
             $entityManager->flush();
 
-            $this->addFlash('success', "Le produit {$currentProduct} a été modifié en {$product->getTitle()}.");
+            $this->addFlash('success', "Le produit {$currentProduct}  a été modifié.");
 
             return $this->redirectToRoute('admin_product', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/product/edit.html.twig', [
+            'currentMenu' => 'admin_product',
             'product' => $product,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: '_delete', methods: ['POST'])]
-    public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
+    #[Route('/suppression/{slug}', name: '_delete', methods: ['POST'])]
+    public function delete(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Product $product, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($product);

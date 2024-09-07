@@ -15,10 +15,14 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <a href="{{ path|default('default value') }}" class="btn btn-danger">
-                    <i class="fa fa-check">&nbsp;</i>
-                    OUI
-                </a>
+                <form method="post" action="{{ path|default('default value') }}">
+                    <input type="hidden" name="_token"
+                        value="{{ csrf_token('delete' ~ token|default('default value')) }}">
+                    <button class="btn btn-danger">
+                        <i class="fa fa-check">&nbsp;</i>
+                        OUI
+                    </button>
+                </form>
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
                     <i class="fa fa-ban">&nbsp;</i>
                     NON
