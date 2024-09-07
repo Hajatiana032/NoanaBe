@@ -1,0 +1,44 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}{{ parent() }}-Admin(produits){% endblock %}
+
+{% block main %}
+<div class="container">
+    <h1 class="text-cursive fw-bold">Liste des produits</h1>
+
+    {% include "partials/_flashMessages.html.twig" %}
+    <a href="{{ path('admin_product_new') }}" class="btn btn-primary mb-2">
+        <i class="fa fa-add">&nbsp;</i>
+        Ajouter un produit
+    </a>
+
+    <div class="table-responsive"></div>
+    <table class="table table-bordered text-nowrap">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Disponibilités</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.title }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.isAvailable ? 'disponible' : 'indisponible' }}</td>
+                <td>
+                    <a href="{{ path('admin_product_show', {slug: product.slug}) }}">show</a>
+                    <a href="{{ path('admin_product_edit', {slug: product.slug}) }}">edit</a>
+                </td>
+            </tr>
+            {% else %}
+            {{ component('Placeholder', {colspan: 5}) }}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

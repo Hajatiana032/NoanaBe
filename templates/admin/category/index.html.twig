@@ -32,32 +32,13 @@
                         <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#{{ category.id }}">
                             <i class="fa fa-trash text-danger"></i>
                         </button>
-                        {{ component('DeleteModal', {id: category.id, title: 'Catégorie: ' ~ category.name, message:
-                        'Voulez-vous
-                        supprimer la catégorie ' ~
-                        category.name ~ '?', path: path('admin_category_delete', {slug: category.slug}) }) }}
+                        {{ include('components/DeleteModal.html.twig', {id: category.id, title: 'Catégorie: ' ~
+                        category.name, message: 'Voulez-vous supprimer la catégorie ' ~ category.name ~ '?', path:
+                        path('admin_category_delete', {slug: category.slug})}) }}
                     </td>
                 </tr>
                 {% else %}
-                <tr class="text-center">
-                    <td colspan="2">
-                        <div class="container">
-                            <div class="row">
-                                <div class="placeholder-wave col-lg-4">
-                                    <span class="placeholder placeholder-xs col-12"></span><br>
-                                    <span class="placeholder col-12"></span>
-                                </div>
-                                <div class="col-lg-4">
-                                    <span class="text-danger">Aucun résultat</span>
-                                </div>
-                                <div class="placeholder-wave col-lg-4">
-                                    <span class="placeholder placeholder-xs col-12"></span><br>
-                                    <span class="placeholder col-12"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                {{ component('Placeholder', {colspan: 2}) }}
                 {% endfor %}
             </tbody>
         </table>

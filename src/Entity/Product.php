@@ -23,8 +23,15 @@ class Product
     #[ORM\Column]
     private ?int $price = null;
 
-    #[ORM\Column]
-    private ?bool $isAvailable = null;
+    #[ORM\Column()]
+    public ?bool $isAvailable = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Category $category = null;
 
     public function getId(): ?int
     {
@@ -75,6 +82,30 @@ class Product
     public function setAvailable(bool $isAvailable): static
     {
         $this->isAvailable = $isAvailable;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

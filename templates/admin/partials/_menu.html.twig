@@ -22,6 +22,13 @@
             </a>
         </li>
         <li class="nav-item mb-2">
+            <a href="{{ path('admin_product') }}"
+                class="nav-link {{ currentMenu is defined and currentMenu == 'admin_product' ? 'link-warning' : 'link-light' }}">
+                <i class="fa fa-spoon">&nbsp;</i>
+                Produit
+            </a>
+        </li>
+        <li class="nav-item mb-2">
             <a href="{{ path('admin_category') }}"
                 class="nav-link {{ currentMenu is defined and currentMenu == 'admin_category' ? 'link-warning' : 'link-light' }}">
                 <i class="fa fa-tag">&nbsp;</i>
