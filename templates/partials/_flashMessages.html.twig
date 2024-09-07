@@ -9,7 +9,9 @@
 {% endif %}
 <div class='alert alert-{{ type }} alert-dismissible fade show align-items-center justify-content-between d-flex'>
     <i class="fa {{ icon }} fs-2">&nbsp;</i>
-    {{ message|raw }}
+    <span>
+        {{ message|raw }}
+    </span>
     <button type='button' class='btn btn-{{ type }} align-items-center fs-2 justify-content-center d-flex'
         data-bs-dismiss='alert' aria-label='Close' style="width: 35px; height: 35px; border-radius: 100% 100%;">
         <i class="fa fa-close"></i>
