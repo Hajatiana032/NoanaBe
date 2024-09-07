@@ -73,18 +73,23 @@ class CategoryController extends AbstractController
     public function edit(#[MapEntity(mapping: ['slug' => 'slug'])] Category $category, EntityManagerInterface $em, Request $request, SluggerInterface $slugger): Response
     {
         // ? stock the old of the category into a variable
-        $oldName = $category->getName();
+        $currentName = $category->getName();
 
         $form = $this->createForm(CategoryType::class, $category);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($category->getName() == $currentName) {
+                $this->addFlash('warning', "Aucun changement n' a été effectuer.");
+                return $this->redirectToRoute('admin_category');
+            }
+
             // ? edit the slug of selected category
             $category->setSlug($slugger->slug($category->getName())->lower());
 
             $em->flush();
 
-            $this->addFlash('success', "La catégorie {$oldName} a été modifiée en {$category->getName()}.");
+            $this->addFlash('success', "La catégorie {$currentName} a été modifiée en {$category->getName()}.");
 
             return $this->redirectToRoute('admin_category');
         }
