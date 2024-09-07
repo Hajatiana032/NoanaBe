@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted("ROLE_ADMIN")]
-#[Route('/admin', name: 'admin_user')]
+#[Route('/admin/utilisateurs', name: 'admin_user')]
 class UserController extends AbstractController
 {
     /**
@@ -23,7 +23,7 @@ class UserController extends AbstractController
      * @param UserRepository $userRepository
      * @return Response
      */
-    #[Route('/utilisateurs', name: '')]
+    #[Route('', name: '')]
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('admin/user/index.html.twig', [
@@ -32,9 +32,12 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * todo Edit the user role
+     */
     #[IsGranted("ROLE_SUPER_ADMIN")]
     #[Route('/roles/super_admin:{admin}/utilisateur:{slug}', name: '_roles')]
-    public function editUserRoles(EntityManagerInterface $em, #[MapEntity(mapping: ['slug' => 'slug'])] User $user, Request $request)
+    public function editUserRoles(EntityManagerInterface $em, #[MapEntity(mapping: ['slug' => 'slug'])] User $user, Request $request): Response
     {
         $currentRoles = $user->getRoles();
 
@@ -65,5 +68,23 @@ class UserController extends AbstractController
             'user' => $user,
             'form' => $form
         ]);
+    }
+
+    #[Route('/suppression/{slug}', name: '_delete')]
+    public function delete(#[MapEntity(mapping: ['slug' => 'slug'])] User $user, EntityManagerInterface $em): Response
+    {
+        $currentRoles = $user->getRoles();
+        $count = count($em->getRepository(User::class)->findByRole("ROLE_SUPER_ADMIN"));
+        if (in_array("ROLE_SUPER_ADMIN", $currentRoles) && $count <= 1) {
+            $this->addFlash('danger', "Vous ne pouvez pas supprimer le dernier super administrateur.");
+            return $this->redirectToRoute('admin_user');
+        }
+
+        $em->remove($user);
+        $em->flush();
+
+        $this->addFlash('danger', "L' utilisateur(rice) <span class='text-capitalize'>{$user->getFirstname()}</span> <span class='text-uppercase'>{$user->getLastname()}</span> a été supprimé(e).");
+
+        return $this->redirectToRoute('admin_user');
     }
 }

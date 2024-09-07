@@ -63,7 +63,7 @@
                         {{ component('DeleteModal', {id: user.id, title: 'Utilisateur(rice): ' ~
                         user.firstname|capitalize ~
                         ' ' ~ user.lastname|upper, message: 'Voulez-vous supprimer cette utilisateur(rice)?', path:
-                        '#'}) }}
+                        path('admin_user_delete', {slug: user.slug})}) }}
                     </td>
                 </tr>
                 {% endif %}

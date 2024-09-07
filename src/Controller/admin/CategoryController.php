@@ -110,7 +110,7 @@ class CategoryController extends AbstractController
         $em->remove($category);
         $em->flush();
 
-        $this->addFlash('success', "La catégorie {$category->getName()} a été supprimée.");
+        $this->addFlash('danger', "La catégorie {$category->getName()} a été supprimée.");
 
         return $this->redirectToRoute('admin_category');
     }
