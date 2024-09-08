@@ -10,6 +10,12 @@
 </a>
 
 <div class="mt-5 m-auto" style="max-width: 350px;">
-    {{ include('admin/product/_form.html.twig') }}
+    {{ form_start(form) }}
+    {% include "admin/product/_form.html.twig" %}
+    <button class="btn btn-primary mt-3">
+        <i class="fa fa-save">&nbsp;</i>
+        Enregistrer
+    </button>
+    {{ form_end(form) }}
 </div>
 {% endblock %}

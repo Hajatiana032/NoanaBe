@@ -29,7 +29,9 @@
                 <td>{{ product.title }}</td>
                 <td>{{ product.description }}</td>
                 <td>{{ product.price }}</td>
-                <td>{{ product.isAvailable ? 'disponible' : 'indisponible' }}</td>
+                <td class="{{ product.isAvailable ? 'text-success' : 'text-danger' }}">
+                    {{ product.isAvailable ? 'disponible' : 'indisponible' }}
+                </td>
                 <td>
                     <a href="{{ path('admin_product_show', {slug: product.slug}) }}" class="btn text-info border-0"
                         data-bs-toggle="tooltip" title="Détail">

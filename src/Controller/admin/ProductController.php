@@ -102,6 +102,8 @@ final class ProductController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($product);
             $entityManager->flush();
+
+            $this->addFlash('danger', "Le produit {$product->getTitle()} a été supprimé.");
         }
 
         return $this->redirectToRoute('admin_product', [], Response::HTTP_SEE_OTHER);
