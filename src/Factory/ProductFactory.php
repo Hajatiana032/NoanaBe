@@ -5,6 +5,7 @@ namespace App\Factory;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 use Zenstruck\Foundry\Persistence\Proxy;
 use Zenstruck\Foundry\Persistence\ProxyRepositoryDecorator;
@@ -19,7 +20,7 @@ final class ProductFactory extends PersistentProxyObjectFactory
      *
      * @todo inject services if required
      */
-    public function __construct() {}
+    public function __construct(private SluggerInterface $slugger) {}
 
     public static function class(): string
     {
@@ -38,7 +39,7 @@ final class ProductFactory extends PersistentProxyObjectFactory
             'isAvailable' => rand(0, 1),
             'price' => mt_rand(1500, 30000),
             'slug' => self::faker()->text(255),
-            'title' => self::faker()->text(255),
+            'title' => self::faker()->word(),
         ];
     }
 
@@ -48,7 +49,8 @@ final class ProductFactory extends PersistentProxyObjectFactory
     protected function initialize(): static
     {
         return $this
-            // ->afterInstantiate(function(Product $product): void {})
-        ;
+            ->afterInstantiate(function (Product $product): void {
+                $product->setSlug($this->slugger->slug($product->getTitle())->lower());
+            });
     }
 }
