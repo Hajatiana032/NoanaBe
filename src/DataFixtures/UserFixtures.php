@@ -31,20 +31,10 @@ class UserFixtures extends Fixture
         });
 
         // ? create 3 admin
-        UserFactory::createMany(3, function () {
-            $user = new User();
-            return [
-                'roles' => ["ROLE_ADMIN"]
-            ];
-        });
+        UserFactory::createMany(3, ['roles' => ["ROLE_ADMIN"]]);
 
         // ? create 15 customers
-        UserFactory::createMany(15, function () {
-            $user = new User();
-            return [
-                'roles' => ["ROLE_USER"]
-            ];
-        });
+        UserFactory::createMany(15, ['roles' => ["ROLE_USER"]]);
 
         $manager->flush();
     }
