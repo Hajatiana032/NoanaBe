@@ -25,7 +25,8 @@ class ProductType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'attr' => [
-                    'class' => 'shadow-none border'
+                    'class' => 'shadow-none border',
+                    'style' => 'height:250px; resize:none'
                 ],
             ])
             ->add('price', MoneyType::class, [

@@ -14,11 +14,11 @@
     <tbody>
         <tr>
             <th>Titre</th>
-            <td>{{ product.title }}</td>
+            <td>{{ product.title|capitalize }}</td>
         </tr>
         <tr>
             <th>Description</th>
-            <td>{{ product.description }}</td>
+            <td>{{ product.description|raw }}</td>
         </tr>
         <tr>
             <th>Prix</th>
@@ -45,7 +45,7 @@
     </button>
 </span>
 {{ include('components/DeleteConfirmation.html.twig', {id: product.id, title: 'Produit: ' ~
-product.title, message: 'Voulez-vous supprimer ce produit?', path: path('admin_product_delete',
+product.title|capitalize, message: 'Voulez-vous supprimer ce produit?', path: path('admin_product_delete',
 {slug: product.slug}), token: product.id}) }}
 
 {% endblock %}

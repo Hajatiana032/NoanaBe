@@ -48,11 +48,8 @@ final class UserFactory extends PersistentProxyObjectFactory
      */
     protected function initialize(): static
     {
-        return $this
-            ->afterInstantiate(function (User $user): void {
-                $user
-                    ->setPassword($this->passwordHasher->hashPassword($user, '123456'))
-                    ->setSlug($this->slugger->slug($user->getFirstname() . '-' . $user->getLastname())->lower());
-            });
+        return $this->afterInstantiate(function (User $user): void {
+            $user->setSlug($this->slugger->slug($user->getFirstname() . '-' . $user->getLastname())->lower());
+        });
     }
 }

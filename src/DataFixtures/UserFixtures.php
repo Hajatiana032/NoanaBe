@@ -11,7 +11,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UserFixtures extends Fixture
 {
-    public function __construct(private UserPasswordHasherInterface $passwordHasher, private SluggerInterface $slugger) {}
+    private $user;
+
+    public function __construct(private SluggerInterface $slugger, private UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->user = new User();
+    }
 
     public function load(ObjectManager $manager): void
     {
@@ -20,21 +25,20 @@ class UserFixtures extends Fixture
 
         // ? create a super admin
         UserFactory::createOne(function () {
-            $user = new User();
             return [
                 'email' => 'nirilantohajatiana032@gmail.com',
                 'firstname' => 'Hajatiana',
                 'lastname' => 'RANDRIANANTOANDRO',
-                'password' => $this->passwordHasher->hashPassword($user, '0329250604'),
+                'password' => $this->passwordHasher->hashPassword($this->user, '0329250604'),
                 'roles' => ["ROLE_SUPER_ADMIN"],
             ];
         });
 
         // ? create 3 admin
-        UserFactory::createMany(3, ['roles' => ["ROLE_ADMIN"]]);
+        UserFactory::createMany(3, ['roles' => ["ROLE_ADMIN"], 'password' => $this->passwordHasher->hashPassword($this->user, '123456')]);
 
         // ? create 15 customers
-        UserFactory::createMany(15, ['roles' => ["ROLE_USER"]]);
+        UserFactory::createMany(15, ['roles' => ["ROLE_USER"], 'password' => $this->passwordHasher->hashPassword($this->user, '123456')]);
 
         $manager->flush();
     }
