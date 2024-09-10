@@ -35,6 +35,9 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
+    #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
+    private ?Image $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,6 +111,23 @@ class Product
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(Image $image): static
+    {
+        // set the owning side of the relation if necessary
+        if ($image->getProduct() !== $this) {
+            $image->setProduct($this);
+        }
+
+        $this->image = $image;
 
         return $this;
     }
