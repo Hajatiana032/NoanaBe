@@ -3,49 +3,55 @@
 {% block title %}{{ parent() }}-Admin(utilisateurs){% endblock %}
 
 {% block main %}
-<h1 class="text-cursive fw-bold">{{ product.title }}</h1>
-<a href="{{ path('admin_product') }}" class="link-danger text-decoration-none">
-    <i class="fa fa-arrow-alt-circle-left">&nbsp;</i>
-    Retour vers la liste
-</a>
+<div class="container mb-5">
+    <h1 class="text-cursive fw-bold">{{ product.title|capitalize }}</h1>
+    <a href="{{ path('admin_product') }}" class="link-danger text-decoration-none">
+        <i class="fa fa-arrow-alt-circle-left">&nbsp;</i>
+        Retour vers la liste
+    </a>
 
 
-<table class="table mt-5">
-    <tbody>
-        <tr>
-            <th>Titre</th>
-            <td>{{ product.title|capitalize }}</td>
-        </tr>
-        <tr>
-            <th>Description</th>
-            <td>{{ product.description|raw }}</td>
-        </tr>
-        <tr>
-            <th>Prix</th>
-            <td>{{ product.price|format_currency('MGA', {}, 'fr_MG') }}</td>
-        </tr>
-        <tr>
-            <th>Disponibilité</th>
-            <td class="{{ product.isAvailable ? 'text-success' : 'text-danger' }}">
-                {{ product.isAvailable ? 'disponible' : 'indisponible' }}
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <table class="table mt-5">
+        <tbody>
+            <tr>
+                <th>Titre</th>
+                <td>{{ product.title|capitalize }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie</th>
+                <td>{{ product.category.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ product.description|raw }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ product.price|format_currency('MGA', {}, 'fr_MG') }}</td>
+            </tr>
+            <tr>
+                <th>Disponibilité</th>
+                <td class="{{ product.isAvailable ? 'text-success' : 'text-danger' }}">
+                    {{ product.isAvailable ? 'disponible' : 'indisponible' }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-<a href="{{ path('admin_product_edit', {slug: product.slug}) }}" class="btn text-warning border-0"
-    data-bs-toggle="tooltip" title="Modifier">
-    <i class="fa fa-edit">&nbsp;</i>
-    Modifier
-</a>
-<span data-bs-toggle="tooltip" title="Supprimer">
-    <button class="btn text-danger border-0" data-bs-toggle="modal" data-bs-target="#{{ product.id }}">
-        <i class="fa fa-trash">&nbsp;</i>
-        Supprimer
-    </button>
-</span>
-{{ include('components/DeleteConfirmation.html.twig', {id: product.id, title: 'Produit: ' ~
-product.title|capitalize, message: 'Voulez-vous supprimer ce produit?', path: path('admin_product_delete',
-{slug: product.slug}), token: product.id}) }}
+    <a href="{{ path('admin_product_edit', {slug: product.slug}) }}" class="btn text-warning border-0"
+        data-bs-toggle="tooltip" title="Modifier">
+        <i class="fa fa-edit">&nbsp;</i>
+        Modifier
+    </a>
+    <span data-bs-toggle="tooltip" title="Supprimer">
+        <button class="btn text-danger border-0" data-bs-toggle="modal" data-bs-target="#{{ product.id }}">
+            <i class="fa fa-trash">&nbsp;</i>
+            Supprimer
+        </button>
+    </span>
+    {{ include('components/DeleteConfirmation.html.twig', {id: product.id, title: 'Produit: ' ~
+    product.title|capitalize, message: 'Voulez-vous supprimer ce produit?', path: path('admin_product_delete',
+    {slug: product.slug}), token: product.id}) }}
+</div>
 
 {% endblock %}
