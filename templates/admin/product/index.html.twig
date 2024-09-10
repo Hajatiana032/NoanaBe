@@ -16,8 +16,9 @@
         <table class="table table-bordered text-nowrap">
             <thead>
                 <tr>
-                    <th>Titre</th>
-                    <th>Description</th>
+                    <th>Titres</th>
+                    <th>Descriptions</th>
+                    <th>Catégories</th>
                     <th>Prix</th>
                     <th>Disponibilités</th>
                     <th>actions</th>
@@ -47,8 +48,8 @@
                                     </div>
                                 </div>
                             </div>
-
                     </td>
+                    <td>{{ product.category.name }}</td>
                     <td>{{ product.price|format_currency('MGA', {}, 'fr_MG') }}</td>
                     <td class="{{ product.isAvailable ? 'text-success' : 'text-danger' }}">
                         {{ product.isAvailable ? 'disponible' : 'indisponible' }}
