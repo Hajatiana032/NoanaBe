@@ -25,16 +25,17 @@ final class ProductController extends AbstractController
      * @return Response
      */
     #[Route(name: '', methods: ['GET'])]
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository, Request $request): Response
     {
         return $this->render('admin/product/index.html.twig', [
             'currentMenu' => 'admin_product',
+            // 'form' => $form,
             'products' => $productRepository->findAll(),
         ]);
     }
 
     /**
-     * Undocumented function
+     * todo Add a product
      *
      * @param Request $request
      * @param EntityManagerInterface $entityManager
@@ -65,6 +66,9 @@ final class ProductController extends AbstractController
         ]);
     }
 
+    /**
+     * todo Show a product
+     */
     #[Route('/{slug}', name: '_show', methods: ['GET'])]
     public function show(#[MapEntity(mapping: ['slug' => 'slug'])] Product $product): Response
     {
@@ -74,6 +78,9 @@ final class ProductController extends AbstractController
         ]);
     }
 
+    /**
+     * todo Edit a product
+     */
     #[Route('/modification/{slug}', name: '_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Product $product, EntityManagerInterface $entityManager): Response
     {
@@ -96,6 +103,9 @@ final class ProductController extends AbstractController
         ]);
     }
 
+    /**
+     * todo Delete a product
+     */
     #[Route('/suppression/{slug}', name: '_delete', methods: ['POST'])]
     public function delete(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Product $product, EntityManagerInterface $entityManager): Response
     {
@@ -107,5 +117,22 @@ final class ProductController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_product', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * todo Search products
+     *
+     * @param Request $request
+     * @param ProductRepository $productRepository
+     * @return void
+     */
+    #[Route('?recherche', name: '_search', methods: ['GET'])]
+    public function search(Request $request, ProductRepository $productRepository)
+    {
+        return $this->render('admin/product/search_results.html.twig', [
+            'currentMenu' => 'admin_product',
+            'query' => $request->query->get('q'),
+            'products' => $productRepository->search($request->query->get('q'))
+        ]);
     }
 }

@@ -1,19 +1,26 @@
 {% extends "admin/layout.html.twig" %}
 
-{% block title %}{{ parent() }}-Admin(catégories){% endblock %}
+{% block title %}
+{{ parent() }}-Admin(catégories)
+{% endblock %}
 
 {% block search %}
 {% include "components/AdminSearchBar.html.twig" with {path: path('admin_category_search')} %}
 {% endblock %}
 
 {% block main %}
-<div class="container mb-5">
-    <h1 class="text-cursive fw-bold">Liste des catégories</h1>
-    {% include "partials/_flashMessages.html.twig" %}
+<div class="container mb-2">
+    <h1 class="text-cursive fw-bold">Résultats de la recherche pour: "{{ query }}"</h1>
+
+    {% if categories %}
+    <h5>Nombre de résultats: {{ categories|length }}</h5>
+    {% endif %}
+
     <a href="{{ path('admin_category_new') }}" class="btn btn-primary mb-2">
         <i class="fa fa-add">&nbsp;</i>
         Ajouter une catégorie
     </a>
+
     {% include "admin/category/_table.html.twig" %}
 </div>
 {% endblock %}

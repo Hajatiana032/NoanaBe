@@ -4,6 +4,10 @@
 {{ parent() }}-Admin(catégories)
 {% endblock %}
 
+{% block search %}
+{% include "components/AdminSearchBar.html.twig" with {path: path('admin_category_search')} %}
+{% endblock %}
+
 {% block main %}
 <div class="container mb-5">
     <h1 class="text-cursive fw-bold">Modifications de la catégorie "{{ category.name }}"</h1>

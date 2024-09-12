@@ -1,0 +1,67 @@
+<div class="table-responsive">
+    <table class="table table-bordered text-nowrap">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Adresse email</th>
+                <th>Roles</th>
+                <th>Date de création</th>
+                <th>Date de mise à jour</th>
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>
+                    {{ user.lastname|upper }}
+                </td>
+                <td>
+                    {{ user.firstname|capitalize }}
+                </td>
+                <td>
+                    {{ user.email }}
+                </td>
+                <td>
+                    <span
+                        class="badge {{ ('ROLE_SUPER_ADMIN' in user.roles) ? 'bg-success' : ('ROLE_ADMIN' in user.roles) ? 'bg-primary' : 'bg-warning' }}">
+                        {{
+                        ("ROLE_SUPER_ADMIN" in user.roles) ? 'Super administrateur' :
+                        ("ROLE_ADMIN" in user.roles) ? 'Administrateur':
+                        'Client'
+                        }}
+                    </span>
+                </td>
+                <td>
+                    {{ user.createdat|date("d-M-Y") }}
+                </td>
+                <td>
+                    {{ user.createdat|date("d-M-Y") }}
+                </td>
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
+                <td>
+                    <a href="{{ path('admin_user_roles', {admin: app.user.slug, slug: user.slug}) }}"
+                        class="btn border-0" data-bs-toggle="tooltip" title="Modifier le role">
+                        <i class="fa fa-people-arrows text-warning"></i>
+                    </a>
+                    <span data-bs-toggle="tooltip" title="Supprimer">
+                        <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#{{ user.id }}">
+                            <i class="fa fa-trash text-danger"></i>
+                        </button>
+                    </span>
+                    {{ include('components/DeleteConfirmation.html.twig', {id: user.id, title: 'Utilisateur(rice): '
+                    ~
+                    user.firstname|capitalize ~ ' ' ~ user.lastname|upper, message: 'Voulez-vous supprimer cette
+                    utilisateur(rice)?', path: path('admin_user_delete', {slug: user.slug})}) }}
+                </td>
+            </tr>
+            {% endif %}
+            {% else %}
+            {% include "components/Placeholder.html.twig" with {colspan: 7} %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

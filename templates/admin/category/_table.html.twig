@@ -1,0 +1,31 @@
+<div class="table-responsive">
+    <table class="table table-bordered text-nowrap">
+        <thead>
+            <tr>
+                <th class="col-6">Nom</th>
+                <th class="col-6">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>
+                    <a href="{{ path('admin_category_edit', {slug: category.slug}) }}" class="btn border-0"
+                        data-bs-toggle="tooltip" title="Modifier">
+                        <i class="fa fa-edit text-warning"></i>
+                    </a>
+                    <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#{{ category.id }}">
+                        <i class="fa fa-trash text-danger"></i>
+                    </button>
+                    {{ include('components/DeleteConfirmation.html.twig', {id: category.id, title: 'Catégorie: ' ~
+                    category.name, message: 'Voulez-vous supprimer cette catégorie?', path:
+                    path('admin_category_delete', {slug: category.slug})}) }}
+                </td>
+            </tr>
+            {% else %}
+            {{ component('Placeholder', {colspan: 2}) }}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

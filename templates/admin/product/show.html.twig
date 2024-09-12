@@ -2,6 +2,10 @@
 
 {% block title %}{{ parent() }}-Admin(utilisateurs){% endblock %}
 
+{% block search %}
+{% include "components/AdminSearchBar.html.twig" with {path: path('admin_product_search')} %}
+{% endblock %}
+
 {% block main %}
 <div class="container mb-5">
     <h1 class="text-cursive fw-bold">{{ product.title|capitalize }}</h1>

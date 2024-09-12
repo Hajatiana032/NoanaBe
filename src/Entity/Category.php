@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[UniqueEntity(fields: 'name', message: 'Cette catégorie existe déjà.')]
+#[ORM\Index(columns: ['name'], flags: ['fulltext'])]
 class Category
 {
     #[ORM\Id]

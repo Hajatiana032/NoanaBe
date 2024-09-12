@@ -70,6 +70,9 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * todo Delete an user
+     */
     #[Route('/suppression/{slug}', name: '_delete')]
     public function delete(#[MapEntity(mapping: ['slug' => 'slug'])] User $user, EntityManagerInterface $em): Response
     {
@@ -86,5 +89,22 @@ class UserController extends AbstractController
         $this->addFlash('danger', "L' utilisateur(rice) <span class='text-capitalize'>{$user->getFirstname()}</span> <span class='text-uppercase'>{$user->getLastname()}</span> a été supprimé(e).");
 
         return $this->redirectToRoute('admin_user');
+    }
+
+    /**
+     * todo Search an user
+     *
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @return void
+     */
+    #[Route('?recherche', name: '_search', methods: ['GET'])]
+    public function search(Request $request, UserRepository $userRepository)
+    {
+        return $this->render('admin/user/search_results.html.twig', [
+            'currentMenu' => 'admin_user',
+            'query' => $request->query->get('q'),
+            'users' => $userRepository->search($request->query->get('q'))
+        ]);
     }
 }

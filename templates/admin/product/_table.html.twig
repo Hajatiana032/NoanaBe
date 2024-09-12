@@ -1,0 +1,74 @@
+<a href="{{ path('admin_product_new') }}" class="btn btn-primary mb-2">
+    <i class="fa fa-add">&nbsp;</i>
+    Ajouter un produit
+</a>
+
+<div class="table-responsive">
+    <table class="table table-bordered text-nowrap">
+        <thead>
+            <tr>
+                <th>Titres</th>
+                <th>Descriptions</th>
+                <th>Catégories</th>
+                <th>Prix</th>
+                <th>Disponibilités</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.title|capitalize }}</td>
+                <td>
+                    <i class="fab fa-readme link-success" data-bs-toggle="modal"
+                        data-bs-target="#content{{ product.id }}" style="cursor: pointer;">&nbsp;</i>
+                    {{ product.description|slice(0, 10) }}...
+                    <div class="modal fade" id="content{{ product.id }}" tabindex="-1" data-bs-backdrop="static"
+                        data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered text-wrap" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalTitleId">
+                                        {{ product.title|capitalize }}
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ product.description|raw }}
+                                </div>
+                            </div>
+                        </div>
+                </td>
+                <td>{{ product.category.name }}</td>
+                <td>{{ product.price|format_currency('MGA', {}, 'fr_MG') }}</td>
+                <td class="{{ product.isAvailable ? 'text-success' : 'text-danger' }}">
+                    {{ product.isAvailable ? 'disponible' : 'indisponible' }}
+                </td>
+                <td>
+                    <a href="{{ path('admin_product_show', {slug: product.slug}) }}" class="btn text-info border-0"
+                        data-bs-toggle="tooltip" title="Détail">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    <a href="{{ path('admin_product_edit', {slug: product.slug}) }}" class="btn text-warning border-0"
+                        data-bs-toggle="tooltip" title="Modifier">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <span data-bs-toggle="tooltip" title="Supprimer">
+                        <button class="btn text-danger border-0" data-bs-toggle="modal"
+                            data-bs-target="#{{ product.id }}">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </span>
+                    {{ include('components/DeleteConfirmation.html.twig', {id: product.id, title: 'Produit: ' ~
+                    product.title|capitalize, message: 'Voulez-vous supprimer ce produit?', path:
+                    path('admin_product_delete',
+                    {slug: product.slug}), token: product.id}) }}
+                </td>
+            </tr>
+            {% else %}
+            {{ component('Placeholder', {colspan: 6}) }}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

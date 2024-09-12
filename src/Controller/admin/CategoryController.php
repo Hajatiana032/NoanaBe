@@ -114,4 +114,21 @@ class CategoryController extends AbstractController
 
         return $this->redirectToRoute('admin_category');
     }
+
+    /**
+     * todo Search a category
+     *
+     * @param Request $request
+     * @param CategoryRepository $categoryRepository
+     * @return void
+     */
+    #[Route('?recherche', name: '_search', methods: ['GET'])]
+    public function search(Request $request, CategoryRepository $categoryRepository)
+    {
+        return $this->render('admin/category/search_results.html.twig', [
+            'currentMenu' => 'admin_category',
+            'query' => $request->query->get('q'),
+            'categories' => $categoryRepository->search($request->query->get('q'))
+        ]);
+    }
 }

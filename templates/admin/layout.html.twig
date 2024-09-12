@@ -11,10 +11,9 @@
         aria-expanded="false">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <form action="" class="w-100">
-        <input type="search" name="" id="" placeholder="Rechercher..."
-            class="form-control border-0 rounded-0 bg-light p-3">
-    </form>
+    {% block search %}
+    {% include "components/AdminSearchBar.html.twig" %}
+    {% endblock %}
     <div class="navbar-nav pb-2 pt-2">
         <a href="{{ path('app_logout') }}" class="px-3 nav-link p-0 link-success">Déconnexion</a>
     </div>
