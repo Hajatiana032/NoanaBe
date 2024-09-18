@@ -14,33 +14,41 @@
         Retour vers la liste
     </a>
 
-
-    <table class="table mt-5">
-        <tbody>
-            <tr>
-                <th>Titre</th>
-                <td>{{ product.title|capitalize }}</td>
-            </tr>
-            <tr>
-                <th>Catégorie</th>
-                <td>{{ product.category.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description|raw }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ product.price|format_currency('MGA', {}, 'fr_MG') }}</td>
-            </tr>
-            <tr>
-                <th>Disponibilité</th>
-                <td class="{{ product.isAvailable ? 'text-success' : 'text-danger' }}">
-                    {{ product.isAvailable ? 'disponible' : 'indisponible' }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-lg-6">
+            <table class="table mt-5">
+                <tbody>
+                    <tr>
+                        <th>Titre</th>
+                        <td>{{ product.title|capitalize }}</td>
+                    </tr>
+                    <tr>
+                        <th>Catégorie</th>
+                        <td>{{ product.category.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ product.description|raw }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prix</th>
+                        <td>{{ product.price|format_currency('MGA', {}, 'fr_MG') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Disponibilité</th>
+                        <td class="{{ product.isAvailable ? 'text-success' : 'text-danger' }}">
+                            {{ product.isAvailable ? 'disponible' : 'indisponible' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-6">
+            <div class="text-center">
+                <img src="{{ asset('img/uploads/' ~ product.image.name) }}" alt="{{ product.image.slug }}">
+            </div>
+        </div>
+    </div>
 
     <a href="{{ path('admin_product_edit', {slug: product.slug}) }}" class="btn text-warning border-0"
         data-bs-toggle="tooltip" title="Modifier">

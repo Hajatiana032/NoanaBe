@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[UniqueEntity(fields: ['name'], message: 'Ce produit existe déjà.')]
+#[UniqueEntity(fields: ['title'], message: 'Ce produit existe déjà.')]
 #[ORM\Index(columns: ['title', 'description'], flags: ['fulltext'])]
 class Product
 {
@@ -36,8 +36,8 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
-    private ?Image $image = null;
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
 
     public function getId(): ?int
     {
@@ -116,18 +116,13 @@ class Product
         return $this;
     }
 
-    public function getImage(): ?Image
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setImage(Image $image): static
+    public function setImage(string $image): static
     {
-        // set the owning side of the relation if necessary
-        if ($image->getProduct() !== $this) {
-            $image->setProduct($this);
-        }
-
         $this->image = $image;
 
         return $this;

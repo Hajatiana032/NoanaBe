@@ -8,11 +8,13 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class ProductType extends AbstractType
 {
@@ -51,6 +53,13 @@ class ProductType extends AbstractType
                 'label' => 'Catégorie',
                 'placeholder' => 'Sélectionner une catégorie',
                 'autocomplete' => true
+            ])
+            ->add('image', DropzoneType::class, [
+                'mapped' => false,
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Glissez et déposez',
+                ]
             ])
         ;
     }

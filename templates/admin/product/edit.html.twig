@@ -14,6 +14,10 @@
         Annuler
     </a>
     <div class="mt-5 m-auto" style="max-width: 350px;">
+        <div class="text-center">
+            <img src="{{ asset('img/uploads/' ~ product.image) }}" alt="{{ product.image }}" width="250px"
+                class="text-center">
+        </div>
         {{ form_start(form) }}
         {{ include('admin/product/_form.html.twig') }}
         <button type="submit" class="btn btn-warning mt-3">

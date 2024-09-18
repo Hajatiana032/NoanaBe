@@ -2,9 +2,11 @@
 
 namespace App\Controller\admin;
 
+use App\Entity\Image;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
+
+use function PHPUnit\Framework\throwException;
+use function Zenstruck\Foundry\Persistence\persist;
 
 #[IsGranted("ROLE_ADMIN")]
 #[Route('/admin/produits', name: 'admin_product')]
@@ -42,8 +47,8 @@ final class ProductController extends AbstractController
      * @param SluggerInterface $slugger
      * @return Response
      */
-    #[Route('/new', name: '_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    #[Route('/ajout', name: '_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, FileUploader $fileUploader): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
@@ -53,8 +58,18 @@ final class ProductController extends AbstractController
             // ? add a select for the new product
             $product->setSlug($slugger->slug($product->getTitle())->lower());
 
+            // ? add image for a product
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                $imageFileName =  $fileUploader->upload($imageFile);
+
+                $product->setImage($imageFileName);
+            }
+
             $entityManager->persist($product);
             $entityManager->flush();
+
+            $this->addFlash('success', "Le produit {$product->getTitle()} a été ajouté.");
 
             return $this->redirectToRoute('admin_product', [], Response::HTTP_SEE_OTHER);
         }
@@ -82,17 +97,36 @@ final class ProductController extends AbstractController
      * todo Edit a product
      */
     #[Route('/modification/{slug}', name: '_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Product $product, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Product $product, EntityManagerInterface $entityManager, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
         $currentProduct = $product->getTitle();
+
+        $oldImage = null;
+        // ? Verify if the current product has an image
+        if ($product->getImage()) {
+            $oldImage = $this->getParameter('uploads_directory') . '/' . $product->getImage();
+        }
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // ? add a slug for the new product
+            $product->setSlug($slugger->slug($product->getTitle())->lower());
+
+            // ? add image for a product
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+
+                $imageFileName =  $fileUploader->upload($imageFile);
+                $product->setImage($imageFileName);
+            }
+
             $entityManager->flush();
-
             $this->addFlash('success', "Le produit {$currentProduct}  a été modifié.");
-
             return $this->redirectToRoute('admin_product', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -110,6 +144,11 @@ final class ProductController extends AbstractController
     public function delete(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Product $product, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->getPayload()->getString('_token'))) {
+            // ? Delete the product's image into the folder
+            if (file_exists($this->getParameter('uploads_directory') . '/' . $product->getImage())) {
+                unlink($this->getParameter('uploads_directory') . '/' . $product->getImage());
+            }
+
             $entityManager->remove($product);
             $entityManager->flush();
 
