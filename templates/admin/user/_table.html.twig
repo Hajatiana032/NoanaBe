@@ -1,5 +1,12 @@
+{% block stylesheets %}
+    <style>
+        th, td {
+            width: 200px;
+        }
+    </style>
+{% endblock %}
 <div class="table-responsive">
-    <table class="table table-bordered text-nowrap">
+    <table class="table table-bordered text-nowrap" style="table-layout: fixed; width: 100%;">
         <thead>
             <tr>
                 <th>Nom</th>
@@ -9,20 +16,20 @@
                 <th>Date de création</th>
                 <th>Date de mise à jour</th>
                 {% if is_granted("ROLE_SUPER_ADMIN") %}
-                <th>Actions</th>
+                <th style="width: 100px;">Actions</th>
                 {% endif %}
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
             <tr>
-                <td>
+                <td class="text-truncate">
                     {{ user.lastname|upper }}
                 </td>
                 <td>
                     {{ user.firstname|capitalize }}
                 </td>
-                <td>
+                <td class="text-truncate">
                     {{ user.email }}
                 </td>
                 <td>

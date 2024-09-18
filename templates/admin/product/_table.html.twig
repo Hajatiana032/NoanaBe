@@ -1,19 +1,30 @@
+{% block stylesheets %}
+	<style>
+		th, td{
+			width: 250px;
+		}
+		td {
+			height: 75px;
+		}
+	</style>
+{% endblock %}
+
 <a href="{{ path('admin_product_new') }}" class="btn btn-primary mb-2">
 	<i class="fa fa-add">&nbsp;</i>
 	Ajouter un produit
 </a>
 
 <div class="table-responsive">
-	<table class="table table-bordered text-nowrap">
+	<table class="table table-bordered align-middle" style="table-layout: fixed; width: 100%;">
 		<thead>
 			<tr>
 				<th>Photos</th>
 				<th>Titres</th>
-				<th>Descriptions</th>
-				<th>Catégories</th>
+				<th scope="col">Descriptions</th>
+				<th scope="col">Catégories</th>
 				<th>Prix</th>
 				<th>Disponibilités</th>
-				<th>actions</th>
+				<th style="width: 150px;">actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -21,13 +32,13 @@
 				<tr>
 					<td>
 						{% if product.image %}
-							<img src="{{ asset('img/uploads/' ~ product.image) }}" alt="{{ product.image }}" width="50px">
+							<img src="{{ asset('img/uploads/' ~ product.image) }}" alt="{{ product.image|slice(0, 25) }}..." width="50px">
 						{% endif %}
 					</td>
 					<td>{{ product.title|capitalize }}</td>
 					<td>
 						<i class="fab fa-readme link-success" data-bs-toggle="modal" data-bs-target="#content{{ product.id }}" style="cursor: pointer;">&nbsp;</i>
-						{{ product.description|slice(0, 10) }}...
+						{{ product.description|slice(0, 20) }}...
 						<div class="modal fade" id="content{{ product.id }}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
 							<div class="modal-dialog modal-dialog-centered text-wrap" role="document">
 								<div class="modal-content">

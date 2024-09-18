@@ -1,7 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }}{% endblock %}
+{% block title %}
+  {{ parent() }}
+{% endblock %}
 
 {% block body %}
-
+  <div class="container mt-5">
+    <h1 class="text-cursive fw-bold">Nos menu</h1>
+    <div class="row">
+      {% for product in products %}
+        <div class="col-lg-4">
+          <div class="card mb-3 m-auto" style="height: 300px; width: 20rem;">
+            <div class="row g-0">
+              <div class="col-6 col-md-6">
+                <img src="{{ asset('img/uploads/' ~ product.image) }}" alt="{{ product.image }}" class="w-100 border-0 object-fit-cover rounded-start" height="300px" />
+              </div>
+              <div class="col-6 col-md-6">
+                <div class="card-body" style="height: 200px;">
+                  <h5 class="card-title text-truncate">{{ product.title|capitalize }}</h5>
+                  <p class="card-text text-truncate">{{ product.description }}</p>
+                  <h4>{{ product.price|format_currency('MGA', {}, 'fr_MG') }}</h4>
+                </div>
+                <div class="float-end p-2" style="height: 100px;">
+                  <button class="btn btn-info w-100 mb-1">Info</button>
+                  <a href="#" class="btn btn-warning w-100">Commander</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
