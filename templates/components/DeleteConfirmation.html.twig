@@ -1,33 +1,27 @@
-<div class="modal fade" id="{{ id|default('default value') }}" tabindex=" -1" data-bs-backdrop="static"
-    data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title text-truncate" id="modalTitleId">
-                    {{ title|default('default value') }}
-                </h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <i class="fa fa-warning text-danger fs-2 fa-beat-fade">&nbsp;</i>
-                <p>
-                    {{ message|default('default value') }}
-                </p>
-            </div>
-            <div class="modal-footer">
-                <form method="post" action="{{ path|default('default value') }}">
-                    <input type="hidden" name="_token"
-                        value="{{ csrf_token('delete' ~ token|default('default value')) }}">
-                    <button class="btn btn-danger">
-                        <i class="fa fa-check">&nbsp;</i>
-                        OUI
-                    </button>
-                </form>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                    <i class="fa fa-ban">&nbsp;</i>
-                    NON
-                </button>
-            </div>
-        </div>
+<div class="modal fade" id="{{ id|default('default value') }}" tabindex=" -1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title text-truncate" id="modalTitleId">{{ title|default('default value') }}</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <i class="fa fa-warning text-danger fs-2 fa-beat-fade">&nbsp;</i>
+        <p>{{ message|default('default value') }}</p>
+      </div>
+      <div class="modal-footer">
+        <form method="post" action="{{ path|default('default value') }}">
+          <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ (token|default('default value'))) }}" />
+          <button class="btn btn-danger">
+            <i class="fa fa-check">&nbsp;</i>
+            OUI
+          </button>
+        </form>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          <i class="fa fa-ban">&nbsp;</i>
+          NON
+        </button>
+      </div>
     </div>
+  </div>
 </div>

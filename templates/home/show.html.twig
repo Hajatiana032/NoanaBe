@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6 m-auto">
+        <img src="{{ asset('img/uploads/' ~ product.image) }}" alt="{{ product.image }}" class="img-fluid" />
+      </div>
+      <div class="col-md-6">
+        <h1 class="text-cursive fw-bold">{{ product.title|capitalize }}</h1>
+        <h6 class="badge bg-dark">Catégorie: {{ product.category.name }}</h6>
+        <h5 class="mt-5">{{ product.description }}</h5>
+        <h2 class="fw-bold mt-5">{{ product.price|format_currency('MGA', {}, 'fr_MG') }}</h2>
+        <h6 class="badge {{ product.isAvailable ? 'bg-success' : 'bg-danger' }}">
+          {% if product.isAvailable %}
+            Disponible
+          {% else %}
+            Indisponible
+          {% endif %}
+        </h6><br />
+        <a href="#" class="btn btn-warning">
+          <i class="fa fa-bag-shopping">&nbsp;</i>
+          Commander
+        </a>
+      </div>
+    </div>
+    <div class="row mb-5 mt-5">
+      <h1>Menu similaires à {{ product.title|capitalize }}</h1>
+      {% for productLike in productsLike %}
+        <div class="col-md-6">
+          <div class="card mb-3 m-auto" style="height: 300px;">
+            <div class="row g-0">
+              <div class="col-6 col-md-6">
+                <img src="{{ asset('img/uploads/' ~ productLike.image) }}" alt="{{ productLike.image }}" class="w-100 border-0 object-fit-cover rounded-start" height="300px" />
+              </div>
+              <div class="col-6 col-md-6">
+                <div class="card-body" style="height: 200px;">
+                  <h5 class="card-title text-truncate text-cursive fw-bold">{{ productLike.title|capitalize }}</h5>
+                  <h6 class="badge bg-dark">Catégorie: {{ product.category.name }}</h6>
+                  <p class="card-text text-truncate">{{ productLike.description }}</p>
+                  <h4>{{ productLike.price|format_currency('MGA', {}, 'fr_MG') }}</h4>
+                </div>
+                <div class="float-end p-2" style="height: 100px;">
+                  <a href="{{ path('app_show', { slug: productLike.slug, id: productLike.id }) }}" class="btn btn-info w-100 mb-1">Info</a>
+                  <a href="#" class="btn btn-warning w-100">Commander</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

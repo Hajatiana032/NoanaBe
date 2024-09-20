@@ -2,7 +2,6 @@
 
 namespace App\Controller\admin;
 
-use App\Entity\Image;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;

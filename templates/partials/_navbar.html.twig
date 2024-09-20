@@ -1,75 +1,62 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-    <div class="container-fluid">
-        <a class="navbar-brand text-cursive fw-bold" href="{{ path('app_home') }}">NoanaBe</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-            aria-controls="offcanvasNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-start w-100" tabindex="-1" id="offcanvasNavbar"
-            aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
-                    Offcanvas
-                </h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link {{ currentMenu is defined and currentMenu == 'home' ? 'link-warning text-cursive' : 'link-light' }}"
-                            aria-current="page" href="{{ path('app_home') }}">Acceuil</a>
-                    </li>
-
-                </ul>
-                <div class="d-flex align-items-center">
-                    {% if app.user %}
-                    <!-- Example single danger button -->
-                    <div class="btn-group dropstart">
-                        <button type="button" class="btn text-light border-0 dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            {{ app.user.firstname|capitalize }} {{ app.user.lastname|upper }}
-                        </button>
-                        <ul class="dropdown-menu bg-dark shadow">
-                            {% if is_granted("ROLE_ADMIN") %}
-                            <li class="mb-2">
-                                <a class="dropdown-item link-light bg-transparent" href="{{ path('admin_dashboard') }}">
-                                    <i class="fa fa-dashboard">&nbsp;</i>
-                                    Admin
-                                </a>
-                            </li>
-                            {% endif %}
-                            <li class="mb-2">
-                                <a class="dropdown-item link-light bg-transparent" href="{{ path('admin_dashboard') }}">
-                                    <i class="fa fa-user">&nbsp;</i>
-                                    Mon profil
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <a class="dropdown-item link-danger bg-transparent" href="{{ path('app_logout') }}">
-                                    <i class="fa fa-power-off">&nbsp;</i>
-                                    Déconnexion
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {% else %}
-                    <div class="vr bg-white m-2 border-1 border"></div>
-                    <a href="{{ path('app_register') }}" class="nav-link link-light me-3">
-                        <i class="fa fa-pen">&nbsp;</i>
-                        Inscription
+  <div class="container-fluid">
+    <a class="navbar-brand text-cursive fw-bold" href="{{ path('app_home') }}">NoanaBe</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"><span class="navbar-toggler-icon"></span></button>
+    <div class="offcanvas offcanvas-start w-100" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link {{ currentMenu is defined and currentMenu == 'home' ? 'link-warning text-cursive' : 'link-light' }}" aria-current="page" href="{{ path('app_home') }}">Acceuil</a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center">
+          {% if app.user %}
+            <!-- Example single danger button -->
+            <div class="btn-group dropstart">
+              <button type="button" class="btn text-light border-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ app.user.firstname|capitalize }} {{ app.user.lastname|upper }}</button>
+              <ul class="dropdown-menu bg-dark shadow">
+                {% if is_granted('ROLE_ADMIN') %}
+                  <li class="mb-2">
+                    <a class="dropdown-item link-light bg-transparent" href="{{ path('admin_dashboard') }}">
+                      <i class="fa fa-dashboard">&nbsp;</i>
+                      Admin
                     </a>
-                    <a href="{{ path('app_login') }}" class="nav-link link-light">
-                        <i class="fa fa-arrow-right-to-bracket "></i>
-                        Connexion
-                    </a>
-                    {% endif %}
-                </div>
+                  </li>
+                {% endif %}
+                <li class="mb-2">
+                  <a class="dropdown-item link-light bg-transparent" href="{{ path('admin_dashboard') }}">
+                    <i class="fa fa-user">&nbsp;</i>
+                    Mon profil
+                  </a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item link-danger bg-transparent" href="{{ path('app_logout') }}">
+                    <i class="fa fa-power-off">&nbsp;</i>
+                    Déconnexion
+                  </a>
+                </li>
+              </ul>
             </div>
+          {% else %}
+            <div class="vr bg-white m-2 border-1 border"></div>
+            <a href="{{ path('app_register') }}" class="nav-link me-3 {{ currentMenu is defined and currentMenu == 'register' ? 'link-warning text-cursive' : 'link-light' }}">
+              <i class="fa fa-pen">&nbsp;</i>
+              Inscription
+            </a>
+            <a href="{{ path('app_login') }}" class="nav-link link-light">
+              <i class="fa fa-arrow-right-to-bracket"></i>
+              Connexion
+            </a>
+          {% endif %}
         </div>
+      </div>
     </div>
+  </div>
 </nav>

@@ -1,19 +1,21 @@
-{% extends "admin/layout.html.twig" %}
+{% extends 'admin/layout.html.twig' %}
 
-{% block title %}{{ parent() }}-Admin(catégories){% endblock %}
+{% block title %}
+  {{ parent() }}-Admin(catégories)
+{% endblock %}
 
 {% block search %}
-{% include "components/AdminSearchBar.html.twig" with {path: path('admin_category_search')} %}
+  {{ include('components/AdminSearchBar.html.twig', { path: path('admin_category_search') }) }}
 {% endblock %}
 
 {% block main %}
-<div class="container mb-5">
+  <div class="container mb-5">
     <h1 class="text-cursive fw-bold">Liste des catégories</h1>
-    {% include "partials/_flashMessages.html.twig" %}
+    {% include 'partials/_flashMessages.html.twig' %}
     <a href="{{ path('admin_category_new') }}" class="btn btn-primary mb-2">
-        <i class="fa fa-add">&nbsp;</i>
-        Ajouter une catégorie
+      <i class="fa fa-add">&nbsp;</i>
+      Ajouter une catégorie
     </a>
-    {% include "admin/category/_table.html.twig" %}
-</div>
+    {% include 'admin/category/_table.html.twig' %}
+  </div>
 {% endblock %}

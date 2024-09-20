@@ -40,7 +40,7 @@ final class ProductFactory extends PersistentProxyObjectFactory
             'price' => mt_rand(1500, 30000),
             'slug' => self::faker()->text(255),
             'title' => self::faker()->word(),
-            'image' => self::faker()->imageUrl()
+            'image' => basename(self::faker()->image('assets/img/uploads/', 1280, 720, 'food'))
         ];
     }
 

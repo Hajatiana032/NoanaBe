@@ -2,6 +2,10 @@
 @import "../../vendor/twbs//bootstrap/scss/functions";
 @import "../../vendor/twbs//bootstrap/scss/variables";
 
+.turbo-progress-bar {
+  background-color: $yellow;
+}
+
 $custom-colors: (
   "primary": $indigo,
   "dark": rgb(24, 24, 25),

@@ -9,7 +9,7 @@
     <h1 class="text-cursive fw-bold">Nos menu</h1>
     <div class="row">
       {% for product in products %}
-        <div class="col-lg-4">
+        <div class="col-md-6 col-lg-4">
           <div class="card mb-3 m-auto" style="height: 300px; width: 20rem;">
             <div class="row g-0">
               <div class="col-6 col-md-6">
@@ -17,12 +17,12 @@
               </div>
               <div class="col-6 col-md-6">
                 <div class="card-body" style="height: 200px;">
-                  <h5 class="card-title text-truncate">{{ product.title|capitalize }}</h5>
+                  <h5 class="card-title text-truncate text-cursive fw-bold">{{ product.title|capitalize }}</h5>
                   <p class="card-text text-truncate">{{ product.description }}</p>
                   <h4>{{ product.price|format_currency('MGA', {}, 'fr_MG') }}</h4>
                 </div>
                 <div class="float-end p-2" style="height: 100px;">
-                  <button class="btn btn-info w-100 mb-1">Info</button>
+                  <a href="{{ path('app_show', { slug: product.slug, id: product.id }) }}" class="btn btn-info w-100 mb-1">Info</a>
                   <a href="#" class="btn btn-warning w-100">Commander</a>
                 </div>
               </div>

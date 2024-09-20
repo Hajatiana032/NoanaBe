@@ -31,6 +31,27 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * todo Find similar product
+     *
+     * @param [type] $value
+     * @return void
+     */
+    public function like(string $category, int $id)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.category', 'c')
+            ->where('c.id = :category')
+            ->andWhere('p.id != :id')
+            ->setParameter('category', $category)
+            ->setParameter('id', $id)
+            // ->orderBy('RAND()')
+            ->setMaxResults(2)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     //    /**
     //     * @return Product[] Returns an array of Product objects
     //     */
