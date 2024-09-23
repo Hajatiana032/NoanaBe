@@ -41,7 +41,7 @@
                   <h4>{{ productLike.price|format_currency('MGA', {}, 'fr_MG') }}</h4>
                 </div>
                 <div class="float-end p-2" style="height: 100px;">
-                  <a href="{{ path('app_show', { slug: productLike.slug, id: productLike.id }) }}" class="btn btn-info w-100 mb-1">Info</a>
+                  <a href="{{ path('product_show', { slug: productLike.slug, id: productLike.id }) }}" class="btn btn-info w-100 mb-1">Info</a>
                   <a href="#" class="btn btn-warning w-100">Commander</a>
                 </div>
               </div>

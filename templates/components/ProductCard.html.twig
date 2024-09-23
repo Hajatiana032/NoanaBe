@@ -1,0 +1,18 @@
+<div class="card mb-3 m-auto" style="height: 300px; width: 20rem;">
+  <div class="row g-0">
+    <div class="col-6 col-md-6">
+      <img src="{{ asset('img/uploads/' ~ product.image) }}" alt="{{ product.image }}" class="w-100 border-0 object-fit-cover rounded-start" height="300px" />
+    </div>
+    <div class="col-6 col-md-6">
+      <div class="card-body" style="height: 200px;">
+        <h5 class="card-title text-truncate text-cursive fw-bold">{{ product.title|capitalize }}</h5>
+        <p class="card-text text-truncate">{{ product.description }}</p>
+        <h4>{{ product.price|format_currency('MGA', {}, 'fr_MG') }}</h4>
+      </div>
+      <div class="float-end p-2" style="height: 100px;">
+        <a href="{{ path('product_show', { slug: product.slug, id: product.id }) }}" class="btn btn-info w-100 mb-1">Info</a>
+        <a href="#" class="btn btn-warning w-100">Commander</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/register.html.twig', [
-            'currentMenu' => 'register',
+            'currentMenu' => 'registration',
             'registrationForm' => $form,
         ]);
     }

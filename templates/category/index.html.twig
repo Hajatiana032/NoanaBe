@@ -6,12 +6,11 @@
 
 {% block body %}
   <div class="container mt-5">
-    <h1 class="text-cursive fw-bold">Nos menu</h1>
+    <h1 class="fw-bold">Catégorie: <span class="text-cursive">{{ category.name|capitalize }}</span></h1>
     <div class="row">
-      {% for product in products %}
+      {% for product in category.products %}
         <div class="col-md-6 col-lg-4">{{ include('components/ProductCard.html.twig') }}</div>
       {% endfor %}
     </div>
-    {{ knp_pagination_render(products) }}
   </div>
 {% endblock %}

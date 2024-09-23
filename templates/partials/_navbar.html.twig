@@ -12,6 +12,10 @@
           <li class="nav-item">
             <a class="nav-link {{ currentMenu is defined and currentMenu == 'home' ? 'link-warning text-cursive' : 'link-light' }}" aria-current="page" href="{{ path('app_home') }}">Acceuil</a>
           </li>
+          <li class="nav-item dropdown">
+            <button class="nav-link dropdown-toggle {{ currentMenu is defined and currentMenu == 'category' ? 'link-warning text-cursive' : 'link-light' }}" data-bs-toggle="dropdown">Catégories</button>
+            <ul class="dropdown-menu dropdown-menu-dark">{{ component('Category') }}</ul>
+          </li>
         </ul>
         <div class="d-flex align-items-center">
           {% if app.user %}
@@ -46,11 +50,11 @@
             </div>
           {% else %}
             <div class="vr bg-white m-2 border-1 border"></div>
-            <a href="{{ path('app_register') }}" class="nav-link me-3 {{ currentMenu is defined and currentMenu == 'register' ? 'link-warning text-cursive' : 'link-light' }}">
+            <a href="{{ path('app_register') }}" class="nav-link me-3 {{ currentMenu is defined and currentMenu == 'registration' ? 'link-warning text-cursive' : 'link-light' }}">
               <i class="fa fa-pen">&nbsp;</i>
               Inscription
             </a>
-            <a href="{{ path('app_login') }}" class="nav-link link-light">
+            <a href="{{ path('app_login') }}" class="nav-link {{ currentMenu is defined and currentMenu == 'login' ? 'link-warning text-cursive' : 'link-light' }}">
               <i class="fa fa-arrow-right-to-bracket"></i>
               Connexion
             </a>
