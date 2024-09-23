@@ -11,7 +11,7 @@
       {% for product in products %}
         <div class="col-md-6 col-lg-4">{{ include('components/ProductCard.html.twig') }}</div>
       {% endfor %}
+      {{ knp_pagination_render(products) }}
     </div>
-    {{ knp_pagination_render(products) }}
   </div>
 {% endblock %}

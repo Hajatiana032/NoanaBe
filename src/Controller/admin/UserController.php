@@ -5,6 +5,7 @@ namespace App\Controller\admin;
 use App\Entity\User;
 use App\Form\RolesType;
 use App\Repository\UserRepository;
+use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -24,11 +25,11 @@ class UserController extends AbstractController
      * @return Response
      */
     #[Route('', name: '')]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, PaginationService $pagination, Request $request): Response
     {
         return $this->render('admin/user/index.html.twig', [
             'currentMenu' => 'admin_user',
-            'users' => $userRepository->findAll()
+            'users' => $pagination->paginate($userRepository->findAll(), $request, 15)
         ]);
     }
 
@@ -99,12 +100,12 @@ class UserController extends AbstractController
      * @return void
      */
     #[Route('?recherche', name: '_search', methods: ['GET'])]
-    public function search(Request $request, UserRepository $userRepository)
+    public function search(Request $request, UserRepository $userRepository, PaginationService $pagination)
     {
         return $this->render('admin/user/search_results.html.twig', [
             'currentMenu' => 'admin_user',
             'query' => $request->query->get('q'),
-            'users' => $userRepository->search($request->query->get('q'))
+            'users' => $pagination->paginate($userRepository->search($request->query->get('q')), $request)
         ]);
     }
 }

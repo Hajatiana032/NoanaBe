@@ -2,15 +2,15 @@
 
 namespace App\Service;
 
+use Doctrine\DBAL\Query\Limit;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class PaginationService
 {
     public function __construct(private PaginatorInterface $paginator) {}
 
-    public function paginate(array $query, $request)
+    public function paginate($query, $request, $limit = 9)
     {
-        return $this->paginator->paginate($query, $request->query->getInt('page', 1), 9);
+        return $this->paginator->paginate($query, $request->query->getInt('page', 1), $limit);
     }
 }

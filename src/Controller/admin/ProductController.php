@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use App\Service\FileUploader;
+use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,12 +30,11 @@ final class ProductController extends AbstractController
      * @return Response
      */
     #[Route(name: '', methods: ['GET'])]
-    public function index(ProductRepository $productRepository, Request $request): Response
+    public function index(ProductRepository $productRepository, PaginationService $pagination, Request $request): Response
     {
         return $this->render('admin/product/index.html.twig', [
             'currentMenu' => 'admin_product',
-            // 'form' => $form,
-            'products' => $productRepository->findAll(),
+            'products' => $pagination->paginate($productRepository->findAll(), $request, 15),
         ]);
     }
 
@@ -165,12 +165,12 @@ final class ProductController extends AbstractController
      * @return void
      */
     #[Route('?recherche', name: '_search', methods: ['GET'])]
-    public function search(Request $request, ProductRepository $productRepository)
+    public function search(Request $request, ProductRepository $productRepository, PaginationService $pagination)
     {
         return $this->render('admin/product/search_results.html.twig', [
             'currentMenu' => 'admin_product',
             'query' => $request->query->get('q'),
-            'products' => $productRepository->search($request->query->get('q'))
+            'products' => $pagination->paginate($productRepository->search($request->query->get('q')), $request, 15)
         ]);
     }
 }

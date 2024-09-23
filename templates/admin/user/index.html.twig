@@ -13,5 +13,6 @@
     <h1 class="text-cursive fw-bold">Liste des utilisateurs</h1>
     {% include 'partials/_flashMessages.html.twig' %}
     {% include 'admin/user/_table.html.twig' %}
+    {{ knp_pagination_render(users) }}
   </div>
 {% endblock %}

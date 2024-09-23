@@ -10,6 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
+    /**
+     * todo Show the selected product
+     */
     #[Route('/{slug}-{id}', name: 'product_show')]
     public function show(Product $product, ProductRepository $productRepository): Response
     {

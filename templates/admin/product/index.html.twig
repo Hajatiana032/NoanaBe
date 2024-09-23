@@ -15,5 +15,6 @@
     {% include 'partials/_flashMessages.html.twig' %}
 
     {% include 'admin/product/_table.html.twig' %}
+    {{ knp_pagination_render(products) }}
   </div>
 {% endblock %}
