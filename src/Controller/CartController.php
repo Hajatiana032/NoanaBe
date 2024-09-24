@@ -63,14 +63,38 @@ class CartController extends AbstractController
 
         $session->set('cart', $cart);
 
+        return $this->redirectToRoute('app_home');
+    }
+
+    /**
+     * todo Add an product into the cart but also increment the selected product
+     */
+    #[Route('/mon_panier/addition/{slug}-{id}', name: 'app_cart_addition')]
+    public function addition(SessionInterface $session, Product $product): Response
+    {
+        // ? get the product id
+        $productId = $product->getId();
+
+        // ? initialize the cart as an empty array
+        $cart = $session->get('cart', []);
+
+        // ? Check if product exists in the cart or else increment the quantity product
+        if (empty($cart[$productId])) {
+            $cart[$productId] = 1;
+        } else {
+            $cart[$productId]++;
+        }
+
+        $session->set('cart', $cart);
+
         return $this->redirectToRoute('app_cart');
     }
 
     /**
      * todo Decrement the quantity of the selected product
      */
-    #[Route('/mon_panier/soustraction/{slug}-{id}', name: 'app_cart_remove')]
-    public function remove(SessionInterface $session, Product $product): Response
+    #[Route('/mon_panier/soustraction/{slug}-{id}', name: 'app_cart_substract')]
+    public function substract(SessionInterface $session, Product $product): Response
     {
         // ? get the product id
         $productId = $product->getId();

@@ -14,7 +14,13 @@
           </li>
           <li class="nav-item dropdown">
             <button class="nav-link dropdown-toggle {{ currentMenu is defined and currentMenu == 'category' ? 'link-warning text-cursive' : 'link-light' }}" data-bs-toggle="dropdown">Catégories</button>
-            <ul class="dropdown-menu dropdown-menu-dark">{{ include('components/Category.html.twig') }}</ul>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              {% for category in categories %}
+                <li>
+                  <a href="{{ path('app_category', { slug: category.slug, id: category.id }) }}" class="dropdown-item">{{ category.name }}</a>
+                </li>
+              {% endfor %}
+            </ul>
           </li>
           <form action="{{ path('product_search') }}" class="d-flex m-auto" method="get">
             <div class="input-group">
@@ -26,7 +32,7 @@
         <a href="{{ path('app_cart') }}" class="m-auto nav-link position-relative {{ currentMenu is defined and currentMenu == 'cart' ? 'link-warning text-cursive' : 'link-light' }}">
           <i class="fa fa-shopping-bag">&nbsp;</i>
           Mon panier
-          <small class="position-absolute top-0 start-100 translate-middle badge bg-warning rounded-circle"></small>
+          <small class="position-absolute top-0 start-100 translate-middle badge bg-warning rounded-circle">{{ app.session.get('cart')|length }}</small>
         </a>
         <div class="d-flex align-items-center">
           {% if app.user %}

@@ -6,7 +6,6 @@
 
 {% block body %}
   <div class="container mt-5">
-    <pre>{{ dump(app.getSession) }}</pre>
     <div class="table-responsive">
       <table class="table align-middle text-nowrap" style="table-layout: fixed; width: 100%;">
         <thead>
@@ -27,9 +26,9 @@
               </td>
               <td>{{ item.product.title }}</td>
               <td>
-                <a href="{{ path('app_cart_remove', { slug: item.product.slug, id: item.product.id }) }}" class="link-warning"><i class="fa fa-minus-circle">&nbsp;</i></a>
+                <a href="{{ path('app_cart_substract', { slug: item.product.slug, id: item.product.id }) }}" class="link-warning"><i class="fa fa-minus-circle">&nbsp;</i></a>
                 {{ item.quantity }}&nbsp;
-                <a href="{{ path('app_cart_add', { slug: item.product.slug, id: item.product.id }) }}" class="link-success"><i class="fa fa-plus-circle"></i></a>
+                <a href="{{ path('app_cart_addition', { slug: item.product.slug, id: item.product.id }) }}" class="link-success"><i class="fa fa-plus-circle"></i></a>
               </td>
               <td>{{ item.product.price|format_currency('MGA', {}, 'fr_MG') }}</td>
               <td>{{ (item.product.price * item.quantity)|format_currency('MGA', {}, 'fr_MG') }}</td>
