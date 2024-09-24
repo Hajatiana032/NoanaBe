@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  <div class="container mt-5">
+    <div class="table-responsive">
+      <table class="table align-middle text-nowrap" style="table-layout: fixed; width: 100%;">
+        <thead>
+          <tr>
+            <th>Photos</th>
+            <th>Titre</th>
+            <th>Quantité</th>
+            <th>Prix unitaire</th>
+            <th>Prix total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+            <tr>
+              <td>
+                <img src="{{ asset('img/uploads/' ~ item.product.image) }}" alt="{{ item.product.image }}" class="img-fluid" width="75px" />
+              </td>
+              <td>{{ item.product.title }}</td>
+              <td>
+                <a href="{{ path('app_cart_remove', { slug: item.product.slug, id: item.product.id }) }}" class="link-warning"><i class="fa fa-minus-circle">&nbsp;</i></a>
+                {{ item.quantity }}&nbsp;
+                <a href="{{ path('app_cart_add', { slug: item.product.slug, id: item.product.id }) }}" class="link-success"><i class="fa fa-plus-circle"></i></a>
+              </td>
+              <td>{{ item.product.price|format_currency('MGA', {}, 'fr_MG') }}</td>
+              <td>{{ (item.product.price * item.quantity)|format_currency('MGA', {}, 'fr_MG') }}</td>
+              <td>
+                <a href="{{ path('app_cart_delete', { slug: item.product.title, id: item.product.id }) }}" class="link-danger"><i class="fa fa-trash"></i></a>
+              </td>
+            </tr>
+          {% else %}
+            <tr class="text-center">
+              <td class="text-danger" colspan="6">Votre panier est vide</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        {% if items %}
+          <tfoot>
+            <tr>
+              <td colspan="4" class="fw-bold">Prix total à payer</td>
+              <td class="fw-bold">{{ total|format_currency('MGA', {}, 'fr_MG') }}</td>
+              <td>
+                <a href="{{ path('app_cart_empty') }}" class="btn btn-danger">Vider le panier</a>
+              </td>
+            </tr>
+          </tfoot>
+        {% endif %}
+      </table>
+    </div>
+    {% if items %}
+      <a href="#" class="btn btn-warning">
+        <i class="fa fa-check-circle">&nbsp;</i>
+        Valider la commande
+      </a>
+    {% endif %}
+  </div>
+{% endblock %}

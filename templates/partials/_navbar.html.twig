@@ -16,13 +16,17 @@
             <button class="nav-link dropdown-toggle {{ currentMenu is defined and currentMenu == 'category' ? 'link-warning text-cursive' : 'link-light' }}" data-bs-toggle="dropdown">Catégories</button>
             <ul class="dropdown-menu dropdown-menu-dark">{{ component('Category') }}</ul>
           </li>
+          <form action="{{ path('product_search') }}" class="d-flex m-auto" method="get">
+            <div class="input-group">
+              <input type="search" name="q" id="" placeholder="Rechercher..." class="form-control border-0 shadow-none bg-light" required />
+              <button type="submit" class="btn btn-warning input-group-text"><i class="fa fa-search"></i></button>
+            </div>
+          </form>
         </ul>
-        <form action="{{ path('product_search') }}" class="d-flex" method="get">
-          <div class="input-group">
-            <input type="search" name="q" id="" placeholder="Rechercher..." class="form-control border-0 shadow-none bg-light" required />
-            <button type="submit" class="btn btn-warning input-group-text"><i class="fa fa-search"></i></button>
-          </div>
-        </form>
+        <a href="{{ path('app_cart') }}" class="m-auto nav-link {{ currentMenu is defined and currentMenu == 'cart' ? 'link-warning text-cursive' : 'link-light' }}">
+          <i class="fa fa-shopping-bag">&nbsp;</i>
+          Mon panier
+        </a>
         <div class="d-flex align-items-center">
           {% if app.user %}
             <!-- Example single danger button -->

@@ -11,7 +11,7 @@
       </div>
       <div class="float-end p-2" style="height: 100px;">
         <a href="{{ path('product_show', { slug: product.slug, id: product.id }) }}" class="btn btn-info w-100 mb-1">Info</a>
-        <a href="#" class="btn btn-warning w-100">Commander</a>
+        <a href="{{ path('app_cart_add', { slug: product.slug, id: product.id }) }}" class="btn btn-warning w-100 {{ product.isAvailable == false ? 'disabled' }}">Commander</a>
       </div>
     </div>
   </div>

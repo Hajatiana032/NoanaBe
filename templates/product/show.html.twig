@@ -18,7 +18,7 @@
             Indisponible
           {% endif %}
         </h6><br />
-        <a href="#" class="btn btn-warning">
+        <a href="{{ path('app_cart_add', { slug: product.slug, id: product.id }) }}" class="btn btn-warning {{ product.isAvailable == false ? 'disabled' }}">
           <i class="fa fa-bag-shopping">&nbsp;</i>
           Commander
         </a>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="float-end p-2" style="height: 100px;">
                   <a href="{{ path('product_show', { slug: productLike.slug, id: productLike.id }) }}" class="btn btn-info w-100 mb-1">Info</a>
-                  <a href="#" class="btn btn-warning w-100">Commander</a>
+                  <a href="{{ path('app_cart_add', { slug: product.slug, id: product.id }) }}" class="btn btn-warning w-100 {{ product.isAvailable == false ? 'disabled' }}">Commander</a>
                 </div>
               </div>
             </div>
