@@ -27,7 +27,9 @@ class CityType extends AbstractType
                     'label' => 'Frais de livraison',
                     'attr' => [
                         'class' => 'shadow-none border'
-                    ]
+                    ],
+                    'currency' => 'MGA',
+                    'scale' => 0,
                 ]
             )
         ;

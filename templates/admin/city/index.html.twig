@@ -38,8 +38,8 @@
               <td>{{ city.name }}</td>
               <td>{{ city.shippingCost|format_currency('MGA', {}, 'fr_MG') }}</td>
               <td>
-                <a href="{{ path('admin_city_edit', { slug: city.slug, id: city.id }) }}" class="btn link-warning border-0"><i class="fa fa-edit"></i></a>
-                <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#{{ city.id }}"><i class="fa fa-trash text-danger"></i></button>
+                <a href="{{ path('admin_city_edit', { slug: city.slug, id: city.id }) }}" class="btn link-warning border-0" data-bs-toggle="tooltip" title="modifier"><i class="fa fa-edit"></i></a>
+                <span data-bs-toggle="tooltip" title="Supprimer"><button class="btn border-0" data-bs-toggle="modal" data-bs-target="#{{ city.id }}"><i class="fa fa-trash text-danger"></i></button></span>
                 {{ include('components/DeleteConfirmation.html.twig', { id: city.id, title: 'Ville: ' ~ city.name, message: 'Voulez-vous supprimer cette ville?', path: path('admin_city_delete', { slug: city.slug, id: city.id }), token: city.id }) }}
               </td>
             </tr>
