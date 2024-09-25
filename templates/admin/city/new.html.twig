@@ -1,0 +1,24 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }}-Admin(villes)
+{% endblock %}
+
+{% block main %}
+  <h1 class="fw-bold text-cursive">Ajout d'une ville</h1>
+
+  <a href="{{ path('admin_city') }}" class="link-danger text-decoration-none">
+    <i class="fa fa-arrow-alt-circle-left">&nbsp;</i>
+    Annuler
+  </a>
+
+  <div class="mt-5 m-auto" style="max-width: 350px;">
+    {{ form_start(form) }}
+    {% include 'admin/city/_form.html.twig' %}
+    <button class="btn btn-primary mt-3 w-100">
+      <i class="fa fa-save">&nbsp;</i>
+      Enregistrer
+    </button>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

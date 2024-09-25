@@ -139,7 +139,7 @@ final class ProductController extends AbstractController
     /**
      * todo Delete a product
      */
-    #[Route('/suppression/{slug}', name: '_delete', methods: ['POST'])]
+    #[Route('/suppression/{slug}-{id}', name: '_delete', methods: ['POST'])]
     public function delete(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Product $product, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->getPayload()->getString('_token'))) {

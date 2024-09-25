@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <table class="table table-bordered text-nowrap">
+  <table class="table table-bordered text-nowrap align-middle">
     <thead>
       <tr>
         <th class="col-6">Nom</th>
@@ -17,7 +17,7 @@
           </td>
         </tr>
       {% else %}
-        {{ component('Placeholder', { colspan: 2 }) }}
+        {{ include('components/placeholder', { colspan: 6 }) }}
       {% endfor %}
     </tbody>
   </table>

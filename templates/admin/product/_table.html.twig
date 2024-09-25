@@ -58,11 +58,11 @@
             <a href="{{ path('admin_product_show', { slug: product.slug }) }}" class="btn text-info border-0" data-bs-toggle="tooltip" title="Détail"><i class="fa fa-eye"></i></a>
             <a href="{{ path('admin_product_edit', { slug: product.slug }) }}" class="btn text-warning border-0" data-bs-toggle="tooltip" title="Modifier"><i class="fa fa-edit"></i></a>
             <span data-bs-toggle="tooltip" title="Supprimer"><button class="btn text-danger border-0" data-bs-toggle="modal" data-bs-target="#{{ product.id }}"><i class="fa fa-trash"></i></button></span>
-            {{ include('components/DeleteConfirmation.html.twig', { id: product.id, title: 'Produit: ' ~ (product.title|capitalize), message: 'Voulez-vous supprimer ce produit?', path: path('admin_product_delete', { slug: product.slug }), token: product.id }) }}
+            {{ include('components/DeleteConfirmation.html.twig', { id: product.id, title: 'Produit: ' ~ (product.title|capitalize), message: 'Voulez-vous supprimer ce produit?', path: path('admin_product_delete', { slug: product.slug, id: product.id }), token: product.id }) }}
           </td>
         </tr>
       {% else %}
-        {{ component('Placeholder', { colspan: 6 }) }}
+        {{ include('components/placeholder', { colspan: 6 }) }}
       {% endfor %}
     </tbody>
   </table>

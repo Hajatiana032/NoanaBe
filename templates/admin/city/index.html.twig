@@ -1,0 +1,53 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }}-Admin(villes)
+{% endblock %}
+
+{% block stylesheets %}
+  <style>
+    th,
+    td {
+      width: 250px;
+    }
+  </style>
+{% endblock %}
+{% block main %}
+  <div class="container mb-5">
+    <h1 class="fw-bold text-cursive">Liste des villes</h1>
+
+    {% include 'partials/_flashMessages.html.twig' %}
+
+    <a href="{{ path('admin_city_new') }}" class="btn btn-primary mb-2">
+      <i class="fa fa-add">&nbsp;</i>
+      Ajouter une ville
+    </a>
+
+    <div class="table-responsive">
+      <table class="table table-bordered text-nowrap align-middle" style="table-layout: fixed; width: 100%;">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Coût de livraison</th>
+            <th>actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for city in cities %}
+            <tr>
+              <td>{{ city.name }}</td>
+              <td>{{ city.shippingCost|format_currency('MGA', {}, 'fr_MG') }}</td>
+              <td>
+                <a href="{{ path('admin_city_edit', { slug: city.slug, id: city.id }) }}" class="btn link-warning border-0"><i class="fa fa-edit"></i></a>
+                <button class="btn border-0" data-bs-toggle="modal" data-bs-target="#{{ city.id }}"><i class="fa fa-trash text-danger"></i></button>
+                {{ include('components/DeleteConfirmation.html.twig', { id: city.id, title: 'Ville: ' ~ city.name, message: 'Voulez-vous supprimer cette ville?', path: path('admin_city_delete', { slug: city.slug, id: city.id }), token: city.id }) }}
+              </td>
+            </tr>
+          {% else %}
+            {{ include('components/Placeholder.html.twig', { colspan: 3 }) }}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
