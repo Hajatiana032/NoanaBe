@@ -6,6 +6,7 @@
 
 {% block body %}
   <div class="container mt-5">
+    <h1 class="text-cursive fw-bold">Mon panier</h1>
     <div class="table-responsive">
       <table class="table align-middle text-nowrap" style="table-layout: fixed; width: 100%;">
         <thead>
@@ -56,7 +57,7 @@
       </table>
     </div>
     {% if items %}
-      <a href="#" class="btn btn-warning">
+      <a href="{{ path('app_order') }}" class="btn btn-primary">
         <i class="fa fa-check-circle">&nbsp;</i>
         Valider la commande
       </a>
