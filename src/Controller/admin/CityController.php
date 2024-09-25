@@ -69,7 +69,7 @@ final class CityController extends AbstractController
     /**
      * todo Edit the selected city
      */
-    #[Route('/modification/{slug}-{id}', name: '_edit', methods: ['GET', 'POST'])]
+    #[Route('/modification/{slug}-{id}', name: '_edit', methods: ['GET', 'POST'], requirements: ['slug' => '[a-z0-9\-]*'])]
     public function edit(Request $request, City $city, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $currentCity = $city->getName();
@@ -87,6 +87,7 @@ final class CityController extends AbstractController
         }
 
         return $this->render('admin/city/edit.html.twig', [
+            'currentMenu' => 'admin_city',
             'city' => $city,
             'form' => $form,
         ]);
@@ -95,7 +96,7 @@ final class CityController extends AbstractController
     /**
      * todo Delete the selected city
      */
-    #[Route('/suppression/{slug}-{id}', name: '_delete', methods: ['POST'])]
+    #[Route('/suppression/{slug}-{id}', name: '_delete', methods: ['POST'], requirements: ['slug' => '[a-z0-9\-]*'])]
     public function delete(Request $request, City $city, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $city->getId(), $request->getPayload()->getString('_token'))) {
