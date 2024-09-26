@@ -43,6 +43,7 @@
         "symfony/ux-autocomplete": "^2.19",
         "symfony/ux-dropzone": "^2.19",
         "symfony/ux-lazy-image": "^2.19",
+        "symfony/ux-live-component": "^2.20",
         "symfony/ux-toggle-password": "^2.19",
         "symfony/ux-turbo": "^2.19",
         "symfony/validator": "7.1.*",

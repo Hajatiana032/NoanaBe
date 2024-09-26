@@ -9,3 +9,4 @@ import "./styles/app.css";
 
 import "./vendor/bootstrap/bootstrap.index.js";
 import "./js/tooltip.js";
+import "./js/axios.js";

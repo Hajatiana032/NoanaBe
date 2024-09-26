@@ -31,17 +31,43 @@
           <i class="fa fa-check">&nbsp;</i>
           Valider la commande
         </button>
+        {{ form_end(form) }}
       </div>
       <div class="col-md-6 m-auto text-end">
         <div class="card shadow ms-auto bg-light p-3 p-lg-5" style="max-width: 450px;">
           <div class="mb-3">
-            <h4>Montant total à payer</h4>
-            <h4>{{ total|format_currency('MGA', {}, 'fr_MG') }}</h4>
+            <h4>Total à payer pour votre menu</h4>
+            {% set totalPrice = total %}
+            <h4 class="text-success fw-bold">{{ totalPrice|format_currency('MGA', {}, 'fr_MG') }}</h4>
           </div>
-          <h4>Frais de livraison</h4>
+          <div class="mb-3">
+            <h4>Frais de livraison</h4>
+            <h4 id="shipping_cost"></h4>
+          </div>
+          <div>
+            <h4>Montant total à payer</h4>
+            <h1 id="total">{{ component('ShippingCost') }}</h1>
+          </div>
         </div>
       </div>
     </div>
-    {{ form_end(form) }}
   </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {# //<script>
+         //     window.addEventListener('DOMContentLoaded', () => {
+         //       const city = document.querySelector('select')
+         //       if (city) {
+         //         city.addEventListener('change', async () => {
+         //           await axios.get(`/commande/frais_de_livraison/${city.value}`).then((response) => {
+         //             document.querySelector('#shipping_cost').innerHTML = `<span class="text-success fw-bold">${response.data.shippingCost}</span>`
+         //             document.querySelector('#total').innerHTML = `<span class="text-success fw-bold">${response.data.totalPrice + response.data.shippingCost}</span>`
+         //           })
+         //         })
+         //       }
+         //     })
+         //
+       </script> #}
 {% endblock %}

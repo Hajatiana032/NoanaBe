@@ -49,9 +49,12 @@ class OrderType extends AbstractType
                 'class' => City::class,
                 'choice_label' => 'name',
                 'attr' => [
-                    'class' => 'form-control border shadow-none'
+                    'class' => 'form-control border shadow-none',
+                    'data-controller' => 'live',
+                    'data-action' => 'change->live#update',
+                    'data-live-name' => 'shippig_cost'
                 ],
-                'autocomplete' => true
+                // 'autocomplete' => trues
             ])
         ;
     }

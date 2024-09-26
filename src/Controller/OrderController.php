@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
 use App\Entity\Order;
 use App\Form\OrderType;
+use App\Repository\CityRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -39,7 +43,27 @@ class OrderController extends AbstractController
 
         return $this->render('order/index.html.twig', [
             'form' => $form,
-            'total' => $totalPrice
+            'total' => $totalPrice,
         ]);
+    }
+
+    #[Route('/commande/frais_de_livraison/{id}', methods: ['GET'])]
+    public function getShippingPrice(City $city, ProductRepository $productRepository, SessionInterface $session): JsonResponse
+    {
+        $cart = $session->get('cart', []);
+
+        $data = [];
+        $totalPrice = 0;
+
+        foreach ($cart as $id => $quantity) {
+            $product = $productRepository->find($id);
+            $data[] = [
+                'product' => $productRepository->find($id),
+                'quantity' => $quantity
+            ];
+            $totalPrice += $product->getPrice() * $quantity;
+        }
+
+        return new JsonResponse(['shippingCost' => $city->getShippingCost(), 'totalPrice' => $totalPrice], JsonResponse::HTTP_OK);
     }
 }
