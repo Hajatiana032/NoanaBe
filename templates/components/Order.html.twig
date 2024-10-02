@@ -11,8 +11,7 @@
       <div class="col-lg-4">{{ form_label(form.address) }}{{ form_widget(form.address) }}{{ form_errors(form.address) }}</div>
       <div class="col-lg-4">{{ form_label(form.city) }}{{ form_widget(form.city) }}{{ form_errors(form.city) }}</div>
     </div>
-    <div>{{ form_label(form.payondelivery) }}{{ form_widget(form.payondelivery) }}{{ form_errors(form.payondelivery) }}</div>
-    {# {{ form_rest(form) }} #}
+    {{ form_rest(form) }}
     <button type="submit" class="btn btn-primary btn-lg mb-3">
       <i class="fa fa-check">&nbsp;</i>
       Valider la commande
@@ -34,6 +33,11 @@
         <div>
           <h4>Montant total à payer</h4>
           <h4 class="fw-bold text-success">{{ (this.TotalPrice(app.session('cart')) + this.ShippingCost.shippingcost)|format_currency('MGA', {}, 'fr_MG') }}</h4>
+        </div>
+      {% else %}
+        <div>
+          <h4>Montant total à payer</h4>
+          <h4 class="fw-bold text-success">{{ this.TotalPrice(app.session('cart'))|format_currency('MGA', {}, 'fr_MG') }}</h4>
         </div>
       {% endif %}
     </div>

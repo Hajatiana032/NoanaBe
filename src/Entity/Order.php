@@ -33,7 +33,7 @@ class Order
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column()]
-    private ?bool $payOnDelivery = null;
+    public ?bool $payOnDelivery = null;
 
     public function __construct()
     {
