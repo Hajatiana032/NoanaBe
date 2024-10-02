@@ -60,6 +60,7 @@ class OrderType extends AbstractType
                 'attr' => [
                     'class' => 'shadow-none'
                 ],
+                'required' => false
             ])
         ;
     }
