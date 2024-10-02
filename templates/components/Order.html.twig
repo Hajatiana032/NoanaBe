@@ -1,0 +1,41 @@
+<div class="row" {{ attributes }}>
+  <div class="col-md-6">
+    {{ form_start(form) }}
+    <div class="row mb-3">
+      <div class="col-lg-6">{{ form_label(form.lastname) }}{{ form_widget(form.lastname) }}
+        {{ form_errors(form.lastname) }}</div>
+      <div class="col-lg-6">{{ form_label(form.firstname) }}{{ form_widget(form.firstname) }}{{ form_errors(form.firstname) }}</div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-lg-4">{{ form_label(form.phone) }}{{ form_widget(form.phone) }}{{ form_errors(form.phone) }}</div>
+      <div class="col-lg-4">{{ form_label(form.address) }}{{ form_widget(form.address) }}{{ form_errors(form.address) }}</div>
+      <div class="col-lg-4">{{ form_label(form.city) }}{{ form_widget(form.city) }}{{ form_errors(form.city) }}</div>
+    </div>
+    <div>{{ form_label(form.payondelivery) }}{{ form_widget(form.payondelivery) }}{{ form_errors(form.payondelivery) }}</div>
+    {# {{ form_rest(form) }} #}
+    <button type="submit" class="btn btn-primary btn-lg mb-3">
+      <i class="fa fa-check">&nbsp;</i>
+      Valider la commande
+    </button>
+    {{ form_end(form) }}
+  </div>
+  <div class="col-md-6 m-auto text-end">
+    <div class="card shadow ms-auto bg-light p-3 p-lg-5" style="max-width: 450px;">
+      <div class="mb-3">
+        <h4>Total à payer pour votre menu</h4>
+
+        <h4 class="text-success fw-bold">{{ this.TotalPrice(app.session('cart'))|format_currency('MGA', {}, 'fr_MG') }}</h4>
+      </div>
+      {% if this.ShippingCost %}
+        <div class="mb-3">
+          <h4>Frais de livraison</h4>
+          <h4 class="fw-bold text-success">{{ this.ShippingCost.shippingcost|format_currency('MGA', {}, 'fr_Mg') }}</h4>
+        </div>
+        <div>
+          <h4>Montant total à payer</h4>
+          <h4 class="fw-bold text-success">{{ (this.TotalPrice(app.session('cart')) + this.ShippingCost.shippingcost)|format_currency('MGA', {}, 'fr_MG') }}</h4>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -7,8 +7,8 @@ use App\Entity\Order;
 use App\Form\OrderType;
 use App\Repository\CityRepository;
 use App\Repository\ProductRepository;
-use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,31 +20,17 @@ class OrderController extends AbstractController
     #[Route('/commande', name: 'app_order')]
     public function index(Request $request, SessionInterface $session, ProductRepository $productRepository): Response
     {
-        $cart = $session->get('cart', []);
-
-        $data = [];
-        $totalPrice = 0;
-
-        foreach ($cart as $id => $quantity) {
-            $product = $productRepository->find($id);
-            $data[] = [
-                'product' => $productRepository->find($id),
-                'quantity' => $quantity
-            ];
-            $totalPrice += $product->getPrice() * $quantity;
-        }
 
         $order = new Order();
+
         $form = $this->createForm(OrderType::class, $order);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            dd($form->getData());
         }
 
-        return $this->render('order/index.html.twig', [
-            'form' => $form,
-            'total' => $totalPrice,
-        ]);
+        return $this->render('order/index.html.twig', []);
     }
 
     #[Route('/commande/frais_de_livraison/{id}', methods: ['GET'])]
@@ -54,7 +40,6 @@ class OrderController extends AbstractController
 
         $data = [];
         $totalPrice = 0;
-
         foreach ($cart as $id => $quantity) {
             $product = $productRepository->find($id);
             $data[] = [

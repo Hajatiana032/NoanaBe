@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Order;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +21,7 @@ class OrderType extends AbstractType
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
                 'attr' => [
-                    'class' => 'form-control border shadow-none'
+                    'class' => 'form-control border shadow-none',
                 ]
             ])
             ->add('lastname', TextType::class, [
@@ -50,11 +51,15 @@ class OrderType extends AbstractType
                 'choice_label' => 'name',
                 'attr' => [
                     'class' => 'form-control border shadow-none',
-                    'data-controller' => 'live',
-                    'data-action' => 'change->live#update',
-                    'data-live-name' => 'shippig_cost'
+                    'data-model' => 'selectedCity'
                 ],
-                // 'autocomplete' => trues
+                'placeholder' => 'Sélectionner votre ville'
+            ])
+            ->add('payOnDelivery', CheckboxType::class, [
+                'label' => 'Payer à la livraison',
+                'attr' => [
+                    'class' => 'shadow-none'
+                ],
             ])
         ;
     }
